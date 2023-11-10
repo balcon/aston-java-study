@@ -9,32 +9,39 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIndexOutOfBoundsException;
 
 class CustomArrayListTest {
-    CustomArrayList<Integer> list;
+    private CustomArrayList<Integer> list;
+    private final CustomList<Integer> sameList = new CustomArrayList<>();
+    private final CustomList<Integer> otherList = new CustomArrayList<>();
+
+    CustomArrayListTest() {
+        sameList.addAll(List.of(0, 10, 20, 30));
+        otherList.addAll(List.of(30, 20, 10, 0));
+    }
 
     @BeforeEach
     void setUp() {
         list = new CustomArrayList<>();
+        list.add(0);
         list.add(10);
-        list.add(30);
         list.add(20);
-        list.add(50);
+        list.add(30);
     }
 
     @Test
     void add() {
-        list.add(0);
+        list.add(40);
 
         assertThat(list.size()).isEqualTo(4 + 1);
-        assertThat(list.get(4)).isEqualTo(0);
+        assertThat(list.get(4)).isEqualTo(40);
     }
 
     @Test
     void addToIndex() {
-        list.add(2, 0);
+        list.add(2, 15);
 
         System.out.println(list);
         assertThat(list.size()).isEqualTo(4 + 1);
-        assertThat(list.get(2)).isEqualTo(0);
+        assertThat(list.get(2)).isEqualTo(15);
         assertThat(list.get(3)).isEqualTo(20);
     }
 
@@ -45,10 +52,10 @@ class CustomArrayListTest {
 
     @Test
     void addAll() {
-        list.addAll(List.of(1, 2, 3));
+        list.addAll(List.of(40, 50, 60));
 
         assertThat(list.size()).isEqualTo(4 + 3);
-        assertThat(list.get(5)).isEqualTo(2);
+        assertThat(list.get(5)).isEqualTo(50);
     }
 
     @Test
@@ -67,7 +74,7 @@ class CustomArrayListTest {
 
         assertThat(list.size()).isEqualTo(4 - 1);
         assertThat(list.get(1)).isEqualTo(20);
-        assertThat(removed).isEqualTo(30);
+        assertThat(removed).isEqualTo(10);
     }
 
     @Test
@@ -80,16 +87,15 @@ class CustomArrayListTest {
         boolean result = list.remove(Integer.valueOf(10));
 
         assertThat(result).isTrue();
-        assertThat(list.get(0)).isEqualTo(30);
+        assertThat(list.get(1)).isEqualTo(20);
         assertThat(list.size()).isEqualTo(4 - 1);
     }
 
     @Test
     void removeByObjectFail() {
-        boolean result = list.remove(Integer.valueOf(0));
+        boolean result = list.remove(Integer.valueOf(100));
 
         assertThat(result).isFalse();
-        assertThat(list.get(0)).isEqualTo(10);
         assertThat(list.size()).isEqualTo(4);
     }
 
@@ -149,45 +155,21 @@ class CustomArrayListTest {
 
     @Test
     void equalsTrue() {
-        CustomList<Integer> otherList = new CustomArrayList<>();
-        otherList.add(10);
-        otherList.add(30);
-        otherList.add(20);
-        otherList.add(50);
-
-        assertThat(list.equals(otherList)).isTrue();
+        assertThat(list.equals(sameList)).isTrue();
     }
 
     @Test
     void equalsFalse() {
-        CustomList<Integer> otherList = new CustomArrayList<>();
-        otherList.add(10);
-        otherList.add(20);
-        otherList.add(30);
-        otherList.add(50);
-
         assertThat(list.equals(otherList)).isFalse();
     }
 
     @Test
     void equalHashCodes() {
-        CustomList<Integer> otherList = new CustomArrayList<>();
-        otherList.add(10);
-        otherList.add(30);
-        otherList.add(20);
-        otherList.add(50);
-
-        assertThat(list.hashCode()).isEqualTo(otherList.hashCode());
+        assertThat(list.hashCode()).isEqualTo(sameList.hashCode());
     }
 
     @Test
     void notEqualHashCodes() {
-        CustomList<Integer> otherList = new CustomArrayList<>();
-        otherList.add(10);
-        otherList.add(20);
-        otherList.add(30);
-        otherList.add(50);
-
         assertThat(list.hashCode()).isNotEqualTo(otherList.hashCode());
     }
 
