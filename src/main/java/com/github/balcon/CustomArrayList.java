@@ -3,6 +3,7 @@ package com.github.balcon;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Objects;
 
 public class CustomArrayList<E> implements CustomList<E> {
     public static final int DEFAULT_CAPACITY = 10;
@@ -104,6 +105,34 @@ public class CustomArrayList<E> implements CustomList<E> {
     @Override
     public String toString() {
         return Arrays.toString(array);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof CustomList<?> list)) {
+            return false;
+        }
+        if (size != list.size()) {
+            return false;
+        }
+        for (int i = 0; i < size; i++) {
+            if (!Objects.equals(array[i], list.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hashcode = 666;
+        for (int i = 0; i < size; i++) {
+            hashcode *= Objects.hashCode(array[i]) + i;
+        }
+        return hashcode;
     }
 
     private void removeElement(int index) {

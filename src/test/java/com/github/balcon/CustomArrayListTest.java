@@ -148,6 +148,50 @@ class CustomArrayListTest {
     }
 
     @Test
+    void equalsTrue() {
+        CustomList<Integer> otherList = new CustomArrayList<>();
+        otherList.add(10);
+        otherList.add(30);
+        otherList.add(20);
+        otherList.add(50);
+
+        assertThat(list.equals(otherList)).isTrue();
+    }
+
+    @Test
+    void equalsFalse() {
+        CustomList<Integer> otherList = new CustomArrayList<>();
+        otherList.add(10);
+        otherList.add(20);
+        otherList.add(30);
+        otherList.add(50);
+
+        assertThat(list.equals(otherList)).isFalse();
+    }
+
+    @Test
+    void equalHashCodes() {
+        CustomList<Integer> otherList = new CustomArrayList<>();
+        otherList.add(10);
+        otherList.add(30);
+        otherList.add(20);
+        otherList.add(50);
+
+        assertThat(list.hashCode()).isEqualTo(otherList.hashCode());
+    }
+
+    @Test
+    void notEqualHashCodes() {
+        CustomList<Integer> otherList = new CustomArrayList<>();
+        otherList.add(10);
+        otherList.add(20);
+        otherList.add(30);
+        otherList.add(50);
+
+        assertThat(list.hashCode()).isNotEqualTo(otherList.hashCode());
+    }
+
+    @Test
     void sort() {
     }
 }
