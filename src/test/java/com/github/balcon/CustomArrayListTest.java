@@ -3,7 +3,9 @@ package com.github.balcon;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIndexOutOfBoundsException;
@@ -39,7 +41,6 @@ class CustomArrayListTest {
     void addToIndex() {
         list.add(2, 15);
 
-        System.out.println(list);
         assertThat(list.size()).isEqualTo(4 + 1);
         assertThat(list.get(2)).isEqualTo(15);
         assertThat(list.get(3)).isEqualTo(20);
@@ -147,20 +148,21 @@ class CustomArrayListTest {
 
     @Test
     void addAllWithCapacityIncrease() {
-        list.addAll(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9));
+        List<Integer> longList = IntStream.range(0, 30).boxed().toList();
+        list.addAll(longList);
 
-        assertThat(list.size()).isEqualTo(13);
-        assertThat(list.capacity()).isEqualTo(15);
+        assertThat(list.size()).isEqualTo(34);
+        assertThat(list.capacity()).isEqualTo(34);
     }
 
     @Test
     void equalsTrue() {
-        assertThat(list.equals(sameList)).isTrue();
+        assertThat(list).isEqualTo(sameList);
     }
 
     @Test
     void equalsFalse() {
-        assertThat(list.equals(otherList)).isFalse();
+        assertThat(list).isNotEqualTo(otherList);
     }
 
     @Test
@@ -174,6 +176,10 @@ class CustomArrayListTest {
     }
 
     @Test
-    void sort() {
+    void sortDesc() {
+        Comparator<Integer> comparator = (a, b) -> Integer.compare(b, a);
+        list.sort(comparator);
+
+        assertThat(list).isEqualTo(otherList);
     }
 }

@@ -9,21 +9,22 @@ public class CustomArrayList<E> implements CustomList<E> {
     public static final int DEFAULT_CAPACITY = 10;
     private Object[] array;
     private int size = 0;
+    private final Sorter<E> sorter;
 
     public CustomArrayList() {
         array = new Object[DEFAULT_CAPACITY];
+        sorter = new QuickSorter<>();
     }
 
     @Override
     public void add(E element) {
-        checkCapacity(size + 1);
+        checkCapacity();
         array[size++] = element;
     }
 
-    // TODO: 10.11.2023 Do it better
     @Override
     public void add(int index, E element) {
-        checkCapacity(size + 1);
+        checkCapacity();
         if (index == size) {
             array[size++] = element;
             return;
@@ -38,7 +39,10 @@ public class CustomArrayList<E> implements CustomList<E> {
 
     @Override
     public void addAll(Collection<? extends E> collection) {
-        checkCapacity(size + collection.size());
+        int newSize = size + collection.size();
+        if (newSize > capacity()) {
+            increaseCapacity(newSize);
+        }
         for (E element : collection) {
             array[size++] = element;
         }
@@ -88,8 +92,9 @@ public class CustomArrayList<E> implements CustomList<E> {
     }
 
     @Override
+    @SuppressWarnings("all")
     public void sort(Comparator<? super E> comparator) {
-
+        sorter.sort((E[]) array, 0, size - 1, comparator);
     }
 
     public void trimToSize() {
@@ -140,8 +145,8 @@ public class CustomArrayList<E> implements CustomList<E> {
         size--;
     }
 
-    private void checkCapacity(int expectedSize) {
-        if (expectedSize > array.length) {
+    private void checkCapacity() {
+        if (size == array.length) {
             increaseCapacity();
         }
     }
@@ -149,6 +154,10 @@ public class CustomArrayList<E> implements CustomList<E> {
     private void increaseCapacity() {
         int capacity = array.length;
         int newCapacity = capacity + (capacity >> 1);
+        increaseCapacity(newCapacity);
+    }
+
+    private void increaseCapacity(int newCapacity) {
         Object[] newArray = new Object[newCapacity];
         System.arraycopy(array, 0, newArray, 0, size);
         array = newArray;
