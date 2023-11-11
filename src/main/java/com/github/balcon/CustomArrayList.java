@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Objects;
 
 public class CustomArrayList<E> implements CustomList<E> {
-    public static final int DEFAULT_CAPACITY = 10;
+    private static final int DEFAULT_CAPACITY = 10;
     private Object[] array;
     private int size = 0;
     private final Sorter<E> sorter;
@@ -49,14 +49,14 @@ public class CustomArrayList<E> implements CustomList<E> {
     }
 
     @Override
-    @SuppressWarnings("all")
+    @SuppressWarnings("unchecked")
     public E get(int index) {
         checkOutOfBound(index);
         return (E) array[index];
     }
 
     @Override
-    @SuppressWarnings("all")
+    @SuppressWarnings("unchecked")
     public E remove(int index) {
         checkOutOfBound(index);
         Object removed = array[index];
@@ -92,7 +92,7 @@ public class CustomArrayList<E> implements CustomList<E> {
     }
 
     @Override
-    @SuppressWarnings("all")
+    @SuppressWarnings("unchecked")
     public void sort(Comparator<? super E> comparator) {
         sorter.sort((E[]) array, 0, size - 1, comparator);
     }
@@ -133,11 +133,7 @@ public class CustomArrayList<E> implements CustomList<E> {
 
     @Override
     public int hashCode() {
-        int hashcode = 666;
-        for (int i = 0; i < size; i++) {
-            hashcode *= Objects.hashCode(array[i]) + i;
-        }
-        return hashcode;
+        return Arrays.hashCode(array);
     }
 
     private void removeElement(int index) {
