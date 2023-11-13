@@ -1,6 +1,11 @@
 plugins {
     id 'java'
+    id('io.freefair.lombok') version '8.4'
 }
+
+archivesBaseName = 'venue'
+group = 'com.github.balcon'
+version = '0.0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
