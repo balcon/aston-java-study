@@ -8,7 +8,7 @@ import com.github.balcon.venue.dao.MusicianDao;
 public class PgDaoFactory implements DaoFactory {
     @Override
     public BandDao getBandDao() {
-        return null;
+        return new PgBandDao();
     }
 
     @Override
