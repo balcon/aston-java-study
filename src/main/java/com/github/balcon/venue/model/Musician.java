@@ -6,5 +6,5 @@ import lombok.Data;
 public class Musician {
     private Integer id;
     private String name;
-    private String instrument;
+    private String role;
 }
