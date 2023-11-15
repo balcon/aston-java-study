@@ -18,6 +18,6 @@ public class PgDaoFactory implements DaoFactory {
 
     @Override
     public MusicianDao getMusicianDao() {
-        return null;
+        return new PgMusicianDao();
     }
 }

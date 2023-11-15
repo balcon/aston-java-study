@@ -2,8 +2,8 @@ package com.github.balcon.venue.dao;
 
 import com.github.balcon.venue.entity.Musician;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface MusicianDao extends CrudDao<Musician> {
-    Optional<Musician> findByName(String name);
+    List<Musician> findByName(String name);
 }
