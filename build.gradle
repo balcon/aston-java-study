@@ -1,6 +1,6 @@
 plugins {
     id 'war'
-    id('io.freefair.lombok') version '8.4'
+    id('io.freefair.lombok') version "${lombokPlugin}"
 }
 
 war {
@@ -13,14 +13,14 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.0-rc1'
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.0-rc1'
-    implementation 'org.postgresql:postgresql:42.6.0'
+    compileOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServlet}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jackson}"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jackson}"
+    implementation "org.postgresql:postgresql:${postgres}"
 
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
+    testImplementation "org.junit.jupiter:junit-jupiter:${junit}"
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    testImplementation 'org.assertj:assertj-core:3.24.2'
+    testImplementation "org.assertj:assertj-core:${asserJ}"
 }
 
 tasks.named('test') {
