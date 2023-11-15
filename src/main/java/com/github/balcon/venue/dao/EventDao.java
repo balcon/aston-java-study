@@ -1,6 +1,6 @@
 package com.github.balcon.venue.dao;
 
-import com.github.balcon.venue.model.Event;
+import com.github.balcon.venue.entity.Event;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.github.balcon.venue.model;
+package com.github.balcon.venue.entity;
 
 import lombok.Builder;
 import lombok.Data;

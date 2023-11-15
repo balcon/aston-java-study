@@ -1,7 +1,7 @@
 package com.github.balcon.venue.dao.pg;
 
 import com.github.balcon.venue.dao.BandDao;
-import com.github.balcon.venue.model.Band;
+import com.github.balcon.venue.entity.Band;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -45,6 +45,14 @@ class PgBandDaoTest extends BaseDaoTest {
 
         assertThat(bandDao.update(band)).isTrue();
         assertThat(bandDao.find(bandId).orElseThrow().getName()).isEqualTo(newName);
+    }
+
+    @Test
+    void updateNullId() {
+        Band band = bandDao.find(100).orElseThrow();
+        band.setId(null);
+
+        assertThat(bandDao.update(band)).isFalse();
     }
 
     @Test

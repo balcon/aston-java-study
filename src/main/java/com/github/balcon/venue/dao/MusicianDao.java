@@ -1,6 +1,6 @@
 package com.github.balcon.venue.dao;
 
-import com.github.balcon.venue.model.Musician;
+import com.github.balcon.venue.entity.Musician;
 
 import java.util.Optional;
 

@@ -1,7 +1,7 @@
 package com.github.balcon.venue.dao.pg;
 
 import com.github.balcon.venue.dao.EventDao;
-import com.github.balcon.venue.model.Event;
+import com.github.balcon.venue.entity.Event;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -57,6 +57,14 @@ class PgEventDaoTest extends BaseDaoTest {
 
         assertThat(eventDao.update(event)).isTrue();
         assertThat(eventDao.find(eventId).orElseThrow().getName()).isEqualTo(newName);
+    }
+
+    @Test
+    void updateNullId() {
+        Event event = eventDao.find(100).orElseThrow();
+        event.setId(null);
+
+        assertThat(eventDao.update(event)).isFalse();
     }
 
     @Test
