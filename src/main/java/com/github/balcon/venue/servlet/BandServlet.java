@@ -1,26 +1,25 @@
 package com.github.balcon.venue.servlet;
 
 import com.github.balcon.venue.ApplicationFactory;
-import com.github.balcon.venue.dao.EventDao;
-import com.github.balcon.venue.entity.Event;
+import com.github.balcon.venue.dao.BandDao;
+import com.github.balcon.venue.entity.Band;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@WebServlet("/events")
-public class EventServlet extends AbstractServlet {
-    private EventDao eventDao;
+@WebServlet("/bands")
+public class BandServlet extends AbstractServlet {
+    private BandDao bandDao;
 
     @Override
     public void init() {
         super.init();
-        eventDao = ApplicationFactory.getDaoFactory().getEventDao();
+        bandDao = ApplicationFactory.getDaoFactory().getBandDao();
     }
 
     @Override
@@ -29,12 +28,12 @@ public class EventServlet extends AbstractServlet {
         PrintWriter respWriter = resp.getWriter();
         String id = req.getParameter("id");
         if (id == null || id.isBlank()) {
-            List<Event> events = eventDao.findAll();
-            respWriter.write(mapper.writeValueAsString(events));
+            List<Band> bands = bandDao.findAll();
+            respWriter.write(mapper.writeValueAsString(bands));
         } else {
-            Optional<Event> event = eventDao.find(Integer.parseInt(id));
-            if (event.isPresent()) {
-                respWriter.write(mapper.writeValueAsString(event.get()));
+            Optional<Band> band = bandDao.find(Integer.parseInt(id));
+            if (band.isPresent()) {
+                respWriter.write(mapper.writeValueAsString(band.get()));
             } else {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
@@ -44,23 +43,20 @@ public class EventServlet extends AbstractServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType(JSON);
-        Event event = Event.builder()
-                .name(req.getParameter("name"))
-                .dateTime(LocalDateTime.parse(req.getParameter("dateTime")))
-                .build();
-        eventDao.save(event);
-        resp.getWriter().write(mapper.writeValueAsString(event));
+        Band band = Band.builder()
+                .name(req.getParameter("name")).build();
+        bandDao.save(band);
+        resp.getWriter().write(mapper.writeValueAsString(band));
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String id = req.getParameter("id");
         if (checkId(id, resp)) {
-            Event build = Event.builder()
+            Band band = Band.builder()
                     .id(Integer.parseInt(id))
-                    .name(req.getParameter("name"))
-                    .dateTime(LocalDateTime.parse(req.getParameter("dateTime"))).build();
-            checkResult(eventDao.update(build), resp);
+                    .name(req.getParameter("name")).build();
+            checkResult(bandDao.update(band), resp);
         }
     }
 
@@ -68,7 +64,7 @@ public class EventServlet extends AbstractServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String id = req.getParameter("id");
         if (checkId(id, resp)) {
-            checkResult(eventDao.delete(Integer.parseInt(id)), resp);
+            checkResult(bandDao.delete(Integer.parseInt(id)), resp);
         }
     }
 }
