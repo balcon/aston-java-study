@@ -6,18 +6,22 @@ import com.github.balcon.venue.dao.EventDao;
 import com.github.balcon.venue.dao.MusicianDao;
 
 public class PgDaoFactory implements DaoFactory {
+    private final BandDao bandDao = new PgBandDao();
+    private final PgEventDao pgEventDao = new PgEventDao();
+    private final PgMusicianDao pgMusicianDao = new PgMusicianDao();
+
     @Override
     public BandDao getBandDao() {
-        return new PgBandDao();
+        return bandDao;
     }
 
     @Override
     public EventDao getEventDao() {
-        return new PgEventDao();
+        return pgEventDao;
     }
 
     @Override
     public MusicianDao getMusicianDao() {
-        return new PgMusicianDao();
+        return pgMusicianDao;
     }
 }

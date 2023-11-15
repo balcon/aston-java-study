@@ -1,18 +1,23 @@
 plugins {
-    id 'java'
+    id 'war'
     id('io.freefair.lombok') version '8.4'
 }
 
-archivesBaseName = 'venue'
-group = 'com.github.balcon'
-version = '0.0.1-SNAPSHOT'
+war {
+    archivesBaseName = 'venue'
+    version = '0.0.1-SNAPSHOT'
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.0-rc1'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.0-rc1'
     implementation 'org.postgresql:postgresql:42.6.0'
+
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testImplementation 'org.assertj:assertj-core:3.24.2'

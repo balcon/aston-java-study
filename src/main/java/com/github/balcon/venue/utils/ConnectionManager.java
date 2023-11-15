@@ -8,6 +8,14 @@ import java.sql.SQLException;
 
 @UtilityClass
 public class ConnectionManager {
+    static {
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Connection connection() {
         try {
             String url = "jdbc:postgresql://localhost:5433/postgres";
