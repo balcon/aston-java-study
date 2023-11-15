@@ -1,0 +1,58 @@
+package com.github.balcon.venue.dao.pg;
+
+import com.github.balcon.venue.dao.BandDao;
+import com.github.balcon.venue.model.Band;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class PgBandDaoTest extends BaseDaoTest {
+    private final BandDao bandDao = new PgDaoFactory().getBandDao();
+
+    @Test
+    void save() {
+        Band newBand = Band.builder()
+                .name("New Band").build();
+
+        assertThat(bandDao.save(newBand).getId()).isNotNull();
+        assertThat(bandDao.findAll()).hasSize(5);
+    }
+
+    @Test
+    void findById() {
+        Optional<Band> band = bandDao.find(100);
+
+        assertThat(band).isPresent();
+        assertThat(band.orElseThrow().getName()).isEqualTo("Band Number One");
+    }
+
+    @Test
+    void findAll() {
+        List<Band> bands = bandDao.findAll();
+
+        assertThat(bands).hasSize(4);
+    }
+
+    @Test
+    void update() {
+        int bandId = 100;
+        String newName = "New Band Name";
+        Band band = bandDao.find(bandId).orElseThrow();
+        band.setName(newName);
+
+        assertThat(bandDao.update(band)).isTrue();
+        assertThat(bandDao.find(bandId).orElseThrow().getName()).isEqualTo(newName);
+    }
+
+    @Test
+    void delete() {
+        int bandId = 100;
+
+        assertThat(bandDao.delete(bandId)).isTrue();
+        assertThat(bandDao.findAll()).hasSize(3);
+        assertThat(bandDao.find(bandId)).isNotPresent();
+    }
+}

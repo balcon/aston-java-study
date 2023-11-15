@@ -21,6 +21,7 @@ public class PgBandDao implements BandDao {
     private static final String DELETE = "DELETE FROM band WHERE id = ?";
 
     @Override
+    // TODO: 15.11.2023 erase id
     public Band save(Band band) {
         try (Connection connection = ConnectionManager.connection();
              PreparedStatement statement = connection.prepareStatement(INSERT, RETURN_GENERATED_KEYS)) {
@@ -78,6 +79,7 @@ public class PgBandDao implements BandDao {
 
     @Override
     public boolean update(Band entity) {
+        // TODO: 15.11.2023 Check id
         try (Connection connection = ConnectionManager.connection();
              PreparedStatement statement = connection.prepareStatement(UPDATE)) {
             statement.setString(1, entity.getName());

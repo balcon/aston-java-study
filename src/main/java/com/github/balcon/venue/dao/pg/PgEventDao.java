@@ -19,6 +19,7 @@ public class PgEventDao implements EventDao {
     private static final String DELETE = "DELETE FROM event WHERE id = ?";
 
     @Override
+    // TODO: 15.11.2023 erase id
     public Event save(Event event) {
         try (Connection connection = ConnectionManager.connection();
              PreparedStatement statement = connection.prepareStatement(INSERT, RETURN_GENERATED_KEYS)) {
@@ -95,6 +96,7 @@ public class PgEventDao implements EventDao {
 
     @Override
     public boolean update(Event event) {
+        // TODO: 15.11.2023 Check id
         try (Connection connection = ConnectionManager.connection();
              PreparedStatement statement = connection.prepareStatement(UPDATE)) {
             statement.setString(1, event.getName());
