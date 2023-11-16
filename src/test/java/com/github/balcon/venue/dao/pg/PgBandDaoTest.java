@@ -26,7 +26,17 @@ class PgBandDaoTest extends BaseDaoTest {
         Optional<Band> band = bandDao.find(100);
 
         assertThat(band).isPresent();
-        assertThat(band.orElseThrow().getName()).isEqualTo("Band Number One");
+        assertThat(band.get().getName()).isEqualTo("Band Number One");
+        assertThat(band.get().getMusicians()).hasSize(4);
+    }
+
+    @Test
+    void findByIdWithoutMusicians() {
+        Optional<Band> band = bandDao.find(103);
+
+        assertThat(band).isPresent();
+        assertThat(band.get().getName()).isEqualTo("Fourth Band");
+        assertThat(band.get().getMusicians()).isEmpty();
     }
 
     @Test
@@ -34,6 +44,7 @@ class PgBandDaoTest extends BaseDaoTest {
         List<Band> bands = bandDao.findAll();
 
         assertThat(bands).hasSize(4);
+        assertThat(bands.get(0).getMusicians()).isNotEmpty();
     }
 
     @Test

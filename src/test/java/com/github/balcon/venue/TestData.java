@@ -40,7 +40,7 @@ public class TestData {
                         (104, 'Musician #104', 'Singer', 101),
                         (105, 'Musician John #105', 'Guitar player', 101),
                         (106, 'Musician #106', 'One-man-band', 102),
-                        (107, 'John Musician #107', 'One-man-band', 103);
+                        (107, 'John Musician #107', 'Keyboard player', 101);
                 """);
     }
 

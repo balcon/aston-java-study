@@ -28,7 +28,7 @@ public abstract class AbstractDao<T> {
 
     protected Optional<T> select(String sql, int id, Builder<T> builder) {
         try (Connection connection = ConnectionManager.connection();
-             PreparedStatement statement = connection.prepareStatement(sql + " WHERE id = ?")) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             T entity = resultSet.next()
@@ -36,11 +36,9 @@ public abstract class AbstractDao<T> {
                     : null;
 
             return Optional.ofNullable(entity);
-        } catch (
-                SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     protected List<T> selectAll(String sql, Builder<T> builder) {

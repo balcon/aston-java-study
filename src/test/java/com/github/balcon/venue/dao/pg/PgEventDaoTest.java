@@ -29,7 +29,8 @@ class PgEventDaoTest extends BaseDaoTest {
         Optional<Event> event = eventDao.find(102);
 
         assertThat(event).isPresent();
-        assertThat(event.orElseThrow().getName()).isEqualTo("Third Event");
+        assertThat(event.get().getName()).isEqualTo("Third Event");
+        assertThat(event.get().getBands()).hasSize(2);
     }
 
     @Test
@@ -37,6 +38,7 @@ class PgEventDaoTest extends BaseDaoTest {
         List<Event> events = eventDao.findAll();
 
         assertThat(events).hasSize(3);
+        assertThat(events.get(1).getBands()).isNotEmpty();
     }
 
     @Test
@@ -46,6 +48,7 @@ class PgEventDaoTest extends BaseDaoTest {
 
         assertThat(events).hasSize(2);
         assertThat(events.get(0).getDateTime().toLocalDate()).isEqualTo(date);
+        assertThat(events.get(0).getBands()).isNotEmpty();
     }
 
     @Test
