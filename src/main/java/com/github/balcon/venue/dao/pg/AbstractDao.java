@@ -89,4 +89,16 @@ public abstract class AbstractDao<T> {
             throw new RuntimeException(e);
         }
     }
+
+    protected int execute(String sql, Object... properties) {
+        try (Connection connection = ConnectionManager.connection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            for (int i = 0; i < properties.length; i++) {
+                statement.setObject(i + 1, properties[i]);
+            }
+            return statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface EventDao extends CrudDao<Event> {
     List<Event> findByDate(LocalDate date);
+
+    boolean addBand(int eventId, int bandId);
+
+    boolean removeBand(int eventId, int bandId);
 }

@@ -78,4 +78,20 @@ class PgEventDaoTest extends BaseDaoTest {
         assertThat(eventDao.findAll()).hasSize(2);
         assertThat(eventDao.find(eventId)).isNotPresent();
     }
+
+    @Test
+    void addBand() {
+        int eventId = 100;
+        eventDao.addBand(eventId, 103);
+
+        assertThat(eventDao.find(eventId).orElseThrow().getBands()).hasSize(4);
+    }
+
+    @Test
+    void removeBand() {
+        int eventId = 100;
+        eventDao.removeBand(eventId, 100);
+
+        assertThat(eventDao.find(eventId).orElseThrow().getBands()).hasSize(2);
+    }
 }

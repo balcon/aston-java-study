@@ -20,6 +20,8 @@ public class PgEventDao extends AbstractDao<Event> implements EventDao {
                 FROM event e
                     LEFT JOIN event_band eb ON e.id = eb.event_id
                     LEFT JOIN band b ON eb.band_id = b.id""";
+    private static final String ADD_BAND = "INSERT INTO event_band (event_id, band_id) VALUES (?,?)";
+    private static final String REMOVE_BAND = "DELETE FROM event_band WHERE event_id = ? AND band_id = ?";
 
     private static final Builder<Event> EVENT_BUILDER = resultSet ->
             Event.builder()
@@ -106,5 +108,15 @@ public class PgEventDao extends AbstractDao<Event> implements EventDao {
     @Override
     public boolean delete(int id) {
         return delete(DELETE, id);
+    }
+
+    @Override
+    public boolean addBand(int eventId, int bandId) {
+        return execute(ADD_BAND, eventId, bandId) == 1;
+    }
+
+    @Override
+    public boolean removeBand(int eventId, int bandId) {
+        return execute(REMOVE_BAND, eventId, bandId) == 1;
     }
 }

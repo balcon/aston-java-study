@@ -55,20 +55,30 @@ public class EventServlet extends AbstractServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String id = req.getParameter("id");
+        String bandId = req.getParameter("bandId");
         if (checkId(id, resp)) {
-            Event event = Event.builder()
-                    .id(Integer.parseInt(id))
-                    .name(req.getParameter("name"))
-                    .dateTime(LocalDateTime.parse(req.getParameter("dateTime"))).build();
-            checkResult(eventDao.update(event), resp);
+            if (checkId(bandId, resp)) {
+                checkResult(eventDao.addBand(Integer.parseInt(id), Integer.parseInt(bandId)), resp);
+            } else {
+                Event event = Event.builder()
+                        .id(Integer.parseInt(id))
+                        .name(req.getParameter("name"))
+                        .dateTime(LocalDateTime.parse(req.getParameter("dateTime"))).build();
+                checkResult(eventDao.update(event), resp);
+            }
         }
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String id = req.getParameter("id");
+        String bandId = req.getParameter("bandId");
         if (checkId(id, resp)) {
-            checkResult(eventDao.delete(Integer.parseInt(id)), resp);
+            if (checkId(bandId, resp)) {
+                checkResult(eventDao.removeBand(Integer.parseInt(id), Integer.parseInt(bandId)), resp);
+            } else {
+                checkResult(eventDao.delete(Integer.parseInt(id)), resp);
+            }
         }
     }
 }

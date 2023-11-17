@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS band
 CREATE TABLE IF NOT EXISTS event_band
 (
     event_id INTEGER REFERENCES event (id) ON DELETE CASCADE,
-    band_id  INTEGER REFERENCES band (id) ON DELETE CASCADE
+    band_id  INTEGER REFERENCES band (id) ON DELETE CASCADE,
+    UNIQUE (event_id, band_id)
 );
 
 CREATE TABLE IF NOT EXISTS musician
