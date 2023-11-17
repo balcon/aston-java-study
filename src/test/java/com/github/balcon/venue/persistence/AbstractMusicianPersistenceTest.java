@@ -1,9 +1,8 @@
-package com.github.balcon.venue.dao.pg;
+package com.github.balcon.venue.persistence;
 
-import com.github.balcon.venue.persistence.MusicianPersistence;
 import com.github.balcon.venue.entity.Band;
 import com.github.balcon.venue.entity.Musician;
-import com.github.balcon.venue.persistence.dao.pg.PgDaoFactory;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -11,8 +10,9 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PgMusicianDaoTest extends BaseDaoTest {
-    private final MusicianPersistence musicianPersistence = new PgDaoFactory().getMusicianPersistence();
+@RequiredArgsConstructor
+public abstract class AbstractMusicianPersistenceTest extends BasePersistenceTest {
+    private final MusicianPersistence musicianPersistence;
 
     @Test
     void save() {

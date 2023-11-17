@@ -1,8 +1,7 @@
-package com.github.balcon.venue.dao.pg;
+package com.github.balcon.venue.persistence;
 
 import com.github.balcon.venue.entity.Event;
-import com.github.balcon.venue.persistence.EventPersistence;
-import com.github.balcon.venue.persistence.dao.pg.PgDaoFactory;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -12,8 +11,9 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PgEventDaoTest extends BaseDaoTest {
-    private final EventPersistence eventPersistence = new PgDaoFactory().getEventPersistence();
+@RequiredArgsConstructor
+public abstract class AbstractEventPersistenceTest extends BasePersistenceTest {
+    private final EventPersistence eventPersistence;
 
     @Test
     void save() {

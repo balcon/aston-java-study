@@ -1,4 +1,4 @@
-package com.github.balcon.venue;
+package com.github.balcon.venue.persistence;
 
 import com.github.balcon.venue.utils.ConnectionManager;
 import lombok.experimental.UtilityClass;

@@ -1,11 +1,10 @@
-package com.github.balcon.venue.dao.pg;
+package com.github.balcon.venue.persistence;
 
-import com.github.balcon.venue.TestData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
-public abstract class BaseDaoTest {
+public abstract class BasePersistenceTest {
     @BeforeAll
     static void beforeAll() {
         TestData.erase();
