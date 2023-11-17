@@ -1,6 +1,7 @@
 plugins {
     id 'war'
     id('io.freefair.lombok') version "${lombokPlugin}"
+    id "org.hibernate.orm" version "${hibernatePlugin}"
 }
 
 war {
