@@ -1,7 +1,8 @@
 package com.github.balcon.venue.dao.pg;
 
-import com.github.balcon.venue.dao.EventDao;
 import com.github.balcon.venue.entity.Event;
+import com.github.balcon.venue.persistence.EventPersistence;
+import com.github.balcon.venue.persistence.dao.pg.PgDaoFactory;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PgEventDaoTest extends BaseDaoTest {
-    private final EventDao eventDao = new PgDaoFactory().getEventDao();
+    private final EventPersistence eventPersistence = new PgDaoFactory().getEventPersistence();
 
     @Test
     void save() {
@@ -20,13 +21,13 @@ class PgEventDaoTest extends BaseDaoTest {
                 .name("New event")
                 .dateTime(LocalDateTime.of(2024, 1, 1, 12, 0)).build();
 
-        assertThat(eventDao.save(newEvent).getId()).isNotNull();
-        assertThat(eventDao.findAll()).hasSize(4);
+        assertThat(eventPersistence.save(newEvent).getId()).isNotNull();
+        assertThat(eventPersistence.findAll()).hasSize(4);
     }
 
     @Test
     void findById() {
-        Optional<Event> event = eventDao.find(102);
+        Optional<Event> event = eventPersistence.find(102);
 
         assertThat(event).isPresent();
         assertThat(event.get().getName()).isEqualTo("Third Event");
@@ -35,7 +36,7 @@ class PgEventDaoTest extends BaseDaoTest {
 
     @Test
     void findAll() {
-        List<Event> events = eventDao.findAll();
+        List<Event> events = eventPersistence.findAll();
 
         assertThat(events).hasSize(3);
         assertThat(events.get(1).getBands()).isNotEmpty();
@@ -44,7 +45,7 @@ class PgEventDaoTest extends BaseDaoTest {
     @Test
     void findByDate() {
         LocalDate date = LocalDate.of(2023, 12, 31);
-        List<Event> events = eventDao.findByDate(date);
+        List<Event> events = eventPersistence.findByDate(date);
 
         assertThat(events).hasSize(2);
         assertThat(events.get(0).getDateTime().toLocalDate()).isEqualTo(date);
@@ -55,43 +56,43 @@ class PgEventDaoTest extends BaseDaoTest {
     void update() {
         int eventId = 100;
         String newName = "New Name";
-        Event event = eventDao.find(eventId).orElseThrow();
+        Event event = eventPersistence.find(eventId).orElseThrow();
         event.setName(newName);
 
-        assertThat(eventDao.update(event)).isTrue();
-        assertThat(eventDao.find(eventId).orElseThrow().getName()).isEqualTo(newName);
+        assertThat(eventPersistence.update(event)).isTrue();
+        assertThat(eventPersistence.find(eventId).orElseThrow().getName()).isEqualTo(newName);
     }
 
     @Test
     void updateNullId() {
-        Event event = eventDao.find(100).orElseThrow();
+        Event event = eventPersistence.find(100).orElseThrow();
         event.setId(null);
 
-        assertThat(eventDao.update(event)).isFalse();
+        assertThat(eventPersistence.update(event)).isFalse();
     }
 
     @Test
     void delete() {
         int eventId = 100;
 
-        assertThat(eventDao.delete(eventId)).isTrue();
-        assertThat(eventDao.findAll()).hasSize(2);
-        assertThat(eventDao.find(eventId)).isNotPresent();
+        assertThat(eventPersistence.delete(eventId)).isTrue();
+        assertThat(eventPersistence.findAll()).hasSize(2);
+        assertThat(eventPersistence.find(eventId)).isNotPresent();
     }
 
     @Test
     void addBand() {
         int eventId = 100;
-        eventDao.addBand(eventId, 103);
+        eventPersistence.addBand(eventId, 103);
 
-        assertThat(eventDao.find(eventId).orElseThrow().getBands()).hasSize(4);
+        assertThat(eventPersistence.find(eventId).orElseThrow().getBands()).hasSize(4);
     }
 
     @Test
     void removeBand() {
         int eventId = 100;
-        eventDao.removeBand(eventId, 100);
+        eventPersistence.removeBand(eventId, 100);
 
-        assertThat(eventDao.find(eventId).orElseThrow().getBands()).hasSize(2);
+        assertThat(eventPersistence.find(eventId).orElseThrow().getBands()).hasSize(2);
     }
 }

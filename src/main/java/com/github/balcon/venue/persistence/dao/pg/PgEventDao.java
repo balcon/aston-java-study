@@ -1,6 +1,6 @@
-package com.github.balcon.venue.dao.pg;
+package com.github.balcon.venue.persistence.dao.pg;
 
-import com.github.balcon.venue.dao.EventDao;
+import com.github.balcon.venue.persistence.EventPersistence;
 import com.github.balcon.venue.entity.Band;
 import com.github.balcon.venue.entity.Event;
 import com.github.balcon.venue.utils.ConnectionManager;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
-public class PgEventDao extends AbstractDao implements EventDao {
+public class PgEventDao extends AbstractDao implements EventPersistence {
     private static final String INSERT = "INSERT INTO event (name, date_time) VALUES (?, ?)";
     private static final String UPDATE = "UPDATE event SET name = ?, date_time = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM event WHERE id = ?";

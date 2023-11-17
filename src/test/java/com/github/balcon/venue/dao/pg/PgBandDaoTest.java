@@ -1,7 +1,8 @@
 package com.github.balcon.venue.dao.pg;
 
-import com.github.balcon.venue.dao.BandDao;
+import com.github.balcon.venue.persistence.BandPersistence;
 import com.github.balcon.venue.entity.Band;
+import com.github.balcon.venue.persistence.dao.pg.PgDaoFactory;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -10,20 +11,20 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PgBandDaoTest extends BaseDaoTest {
-    private final BandDao bandDao = new PgDaoFactory().getBandDao();
+    private final BandPersistence bandPersistence = new PgDaoFactory().getBandPersistence();
 
     @Test
     void save() {
         Band newBand = Band.builder()
                 .name("New Band").build();
 
-        assertThat(bandDao.save(newBand).getId()).isNotNull();
-        assertThat(bandDao.findAll()).hasSize(5);
+        assertThat(bandPersistence.save(newBand).getId()).isNotNull();
+        assertThat(bandPersistence.findAll()).hasSize(5);
     }
 
     @Test
     void findById() {
-        Optional<Band> band = bandDao.find(100);
+        Optional<Band> band = bandPersistence.find(100);
 
         assertThat(band).isPresent();
         assertThat(band.get().getName()).isEqualTo("Band Number One");
@@ -32,7 +33,7 @@ class PgBandDaoTest extends BaseDaoTest {
 
     @Test
     void findByIdWithoutMusicians() {
-        Optional<Band> band = bandDao.find(103);
+        Optional<Band> band = bandPersistence.find(103);
 
         assertThat(band).isPresent();
         assertThat(band.get().getName()).isEqualTo("Fourth Band");
@@ -41,7 +42,7 @@ class PgBandDaoTest extends BaseDaoTest {
 
     @Test
     void findAll() {
-        List<Band> bands = bandDao.findAll();
+        List<Band> bands = bandPersistence.findAll();
 
         assertThat(bands).hasSize(4);
         assertThat(bands.get(0).getMusicians()).isNotEmpty();
@@ -51,27 +52,27 @@ class PgBandDaoTest extends BaseDaoTest {
     void update() {
         int bandId = 100;
         String newName = "New Band Name";
-        Band band = bandDao.find(bandId).orElseThrow();
+        Band band = bandPersistence.find(bandId).orElseThrow();
         band.setName(newName);
 
-        assertThat(bandDao.update(band)).isTrue();
-        assertThat(bandDao.find(bandId).orElseThrow().getName()).isEqualTo(newName);
+        assertThat(bandPersistence.update(band)).isTrue();
+        assertThat(bandPersistence.find(bandId).orElseThrow().getName()).isEqualTo(newName);
     }
 
     @Test
     void updateNullId() {
-        Band band = bandDao.find(100).orElseThrow();
+        Band band = bandPersistence.find(100).orElseThrow();
         band.setId(null);
 
-        assertThat(bandDao.update(band)).isFalse();
+        assertThat(bandPersistence.update(band)).isFalse();
     }
 
     @Test
     void delete() {
         int bandId = 100;
 
-        assertThat(bandDao.delete(bandId)).isTrue();
-        assertThat(bandDao.findAll()).hasSize(3);
-        assertThat(bandDao.find(bandId)).isNotPresent();
+        assertThat(bandPersistence.delete(bandId)).isTrue();
+        assertThat(bandPersistence.findAll()).hasSize(3);
+        assertThat(bandPersistence.find(bandId)).isNotPresent();
     }
 }

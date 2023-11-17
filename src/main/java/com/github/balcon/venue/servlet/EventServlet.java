@@ -1,7 +1,7 @@
 package com.github.balcon.venue.servlet;
 
 import com.github.balcon.venue.ApplicationFactory;
-import com.github.balcon.venue.dao.EventDao;
+import com.github.balcon.venue.persistence.EventPersistence;
 import com.github.balcon.venue.entity.Event;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,12 +15,12 @@ import java.util.Optional;
 
 @WebServlet("/events")
 public class EventServlet extends AbstractServlet {
-    private EventDao eventDao;
+    private EventPersistence eventPersistence;
 
     @Override
     public void init() {
         super.init();
-        eventDao = ApplicationFactory.getDaoFactory().getEventDao();
+        eventPersistence = ApplicationFactory.getPersistenceFactory().getEventPersistence();
     }
 
     @Override
@@ -29,10 +29,10 @@ public class EventServlet extends AbstractServlet {
         PrintWriter respWriter = resp.getWriter();
         String id = req.getParameter("id");
         if (id == null || id.isBlank()) {
-            List<Event> events = eventDao.findAll();
+            List<Event> events = eventPersistence.findAll();
             respWriter.write(mapper.writeValueAsString(events));
         } else {
-            Optional<Event> event = eventDao.find(Integer.parseInt(id));
+            Optional<Event> event = eventPersistence.find(Integer.parseInt(id));
             if (event.isPresent()) {
                 respWriter.write(mapper.writeValueAsString(event.get()));
             } else {
@@ -48,7 +48,7 @@ public class EventServlet extends AbstractServlet {
                 .name(req.getParameter("name"))
                 .dateTime(LocalDateTime.parse(req.getParameter("dateTime")))
                 .build();
-        eventDao.save(event);
+        eventPersistence.save(event);
         resp.getWriter().write(mapper.writeValueAsString(event));
     }
 
@@ -58,13 +58,13 @@ public class EventServlet extends AbstractServlet {
         String bandId = req.getParameter("bandId");
         if (checkId(id, resp)) {
             if (checkId(bandId, resp)) {
-                checkResult(eventDao.addBand(Integer.parseInt(id), Integer.parseInt(bandId)), resp);
+                checkResult(eventPersistence.addBand(Integer.parseInt(id), Integer.parseInt(bandId)), resp);
             } else {
                 Event event = Event.builder()
                         .id(Integer.parseInt(id))
                         .name(req.getParameter("name"))
                         .dateTime(LocalDateTime.parse(req.getParameter("dateTime"))).build();
-                checkResult(eventDao.update(event), resp);
+                checkResult(eventPersistence.update(event), resp);
             }
         }
     }
@@ -75,9 +75,9 @@ public class EventServlet extends AbstractServlet {
         String bandId = req.getParameter("bandId");
         if (checkId(id, resp)) {
             if (checkId(bandId, resp)) {
-                checkResult(eventDao.removeBand(Integer.parseInt(id), Integer.parseInt(bandId)), resp);
+                checkResult(eventPersistence.removeBand(Integer.parseInt(id), Integer.parseInt(bandId)), resp);
             } else {
-                checkResult(eventDao.delete(Integer.parseInt(id)), resp);
+                checkResult(eventPersistence.delete(Integer.parseInt(id)), resp);
             }
         }
     }

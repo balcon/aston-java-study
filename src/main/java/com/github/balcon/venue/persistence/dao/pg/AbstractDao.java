@@ -1,4 +1,4 @@
-package com.github.balcon.venue.dao.pg;
+package com.github.balcon.venue.persistence.dao.pg;
 
 import com.github.balcon.venue.utils.ConnectionManager;
 

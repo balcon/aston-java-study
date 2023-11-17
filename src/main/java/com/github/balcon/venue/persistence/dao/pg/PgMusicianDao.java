@@ -1,6 +1,6 @@
-package com.github.balcon.venue.dao.pg;
+package com.github.balcon.venue.persistence.dao.pg;
 
-import com.github.balcon.venue.dao.MusicianDao;
+import com.github.balcon.venue.persistence.MusicianPersistence;
 import com.github.balcon.venue.entity.Musician;
 import com.github.balcon.venue.utils.ConnectionManager;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PgMusicianDao extends AbstractDao implements MusicianDao {
+public class PgMusicianDao extends AbstractDao implements MusicianPersistence {
     private static final String INSERT = "INSERT INTO musician (name, role, band_id) VALUES (?, ?, ?)";
     private static final String UPDATE = "UPDATE musician SET name = ?, role = ?, band_id = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM musician WHERE id = ?";

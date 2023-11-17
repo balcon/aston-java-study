@@ -1,6 +1,6 @@
-package com.github.balcon.venue.dao.pg;
+package com.github.balcon.venue.persistence.dao.pg;
 
-import com.github.balcon.venue.dao.BandDao;
+import com.github.balcon.venue.persistence.BandPersistence;
 import com.github.balcon.venue.entity.Band;
 import com.github.balcon.venue.entity.Musician;
 import com.github.balcon.venue.utils.ConnectionManager;
@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class PgBandDao extends AbstractDao implements BandDao {
+public class PgBandDao extends AbstractDao implements BandPersistence {
     private static final String INSERT = "INSERT INTO band (name) VALUES (?)";
     private static final String UPDATE = "UPDATE band SET name = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM band WHERE id = ?";

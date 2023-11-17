@@ -1,7 +1,7 @@
 package com.github.balcon.venue.servlet;
 
 import com.github.balcon.venue.ApplicationFactory;
-import com.github.balcon.venue.dao.BandDao;
+import com.github.balcon.venue.persistence.BandPersistence;
 import com.github.balcon.venue.entity.Band;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,12 +14,12 @@ import java.util.Optional;
 
 @WebServlet("/bands")
 public class BandServlet extends AbstractServlet {
-    private BandDao bandDao;
+    private BandPersistence bandPersistence;
 
     @Override
     public void init() {
         super.init();
-        bandDao = ApplicationFactory.getDaoFactory().getBandDao();
+        bandPersistence = ApplicationFactory.getPersistenceFactory().getBandPersistence();
     }
 
     @Override
@@ -28,10 +28,10 @@ public class BandServlet extends AbstractServlet {
         PrintWriter respWriter = resp.getWriter();
         String id = req.getParameter("id");
         if (id == null || id.isBlank()) {
-            List<Band> bands = bandDao.findAll();
+            List<Band> bands = bandPersistence.findAll();
             respWriter.write(mapper.writeValueAsString(bands));
         } else {
-            Optional<Band> band = bandDao.find(Integer.parseInt(id));
+            Optional<Band> band = bandPersistence.find(Integer.parseInt(id));
             if (band.isPresent()) {
                 respWriter.write(mapper.writeValueAsString(band.get()));
             } else {
@@ -45,7 +45,7 @@ public class BandServlet extends AbstractServlet {
         resp.setContentType(JSON);
         Band band = Band.builder()
                 .name(req.getParameter("name")).build();
-        bandDao.save(band);
+        bandPersistence.save(band);
         resp.getWriter().write(mapper.writeValueAsString(band));
     }
 
@@ -56,7 +56,7 @@ public class BandServlet extends AbstractServlet {
             Band band = Band.builder()
                     .id(Integer.parseInt(id))
                     .name(req.getParameter("name")).build();
-            checkResult(bandDao.update(band), resp);
+            checkResult(bandPersistence.update(band), resp);
         }
     }
 
@@ -64,7 +64,7 @@ public class BandServlet extends AbstractServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String id = req.getParameter("id");
         if (checkId(id, resp)) {
-            checkResult(bandDao.delete(Integer.parseInt(id)), resp);
+            checkResult(bandPersistence.delete(Integer.parseInt(id)), resp);
         }
     }
 }

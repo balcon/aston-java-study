@@ -1,9 +1,9 @@
-package com.github.balcon.venue.dao;
+package com.github.balcon.venue.persistence;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface CrudDao<T> {
+public interface Crud<T> {
     T save(T entity);
 
     Optional<T> find(int id);

@@ -1,9 +1,9 @@
 package com.github.balcon.venue.servlet;
 
 import com.github.balcon.venue.ApplicationFactory;
-import com.github.balcon.venue.dao.MusicianDao;
 import com.github.balcon.venue.entity.Band;
 import com.github.balcon.venue.entity.Musician;
+import com.github.balcon.venue.persistence.MusicianPersistence;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,12 +15,12 @@ import java.util.Optional;
 
 @WebServlet("/musicians")
 public class MusicianServlet extends AbstractServlet {
-    private MusicianDao musicianDao;
+    private MusicianPersistence musicianPersistence;
 
     @Override
     public void init() {
         super.init();
-        musicianDao = ApplicationFactory.getDaoFactory().getMusicianDao();
+        musicianPersistence = ApplicationFactory.getPersistenceFactory().getMusicianPersistence();
     }
 
     @Override
@@ -29,10 +29,10 @@ public class MusicianServlet extends AbstractServlet {
         PrintWriter respWriter = resp.getWriter();
         String id = req.getParameter("id");
         if (id == null || id.isBlank()) {
-            List<Musician> musicians = musicianDao.findAll();
+            List<Musician> musicians = musicianPersistence.findAll();
             respWriter.write(mapper.writeValueAsString(musicians));
         } else {
-            Optional<Musician> band = musicianDao.find(Integer.parseInt(id));
+            Optional<Musician> band = musicianPersistence.find(Integer.parseInt(id));
             if (band.isPresent()) {
                 respWriter.write(mapper.writeValueAsString(band.get()));
             } else {
@@ -49,7 +49,7 @@ public class MusicianServlet extends AbstractServlet {
                 .role(req.getParameter("role"))
                 .band(Band.builder()
                         .id(Integer.valueOf(req.getParameter("bandId"))).build()).build();
-        musicianDao.save(musician);
+        musicianPersistence.save(musician);
         resp.getWriter().write(mapper.writeValueAsString(musician));
     }
 
@@ -63,7 +63,7 @@ public class MusicianServlet extends AbstractServlet {
                     .role(req.getParameter("role"))
                     .band(Band.builder()
                             .id(Integer.valueOf(req.getParameter("bandId"))).build()).build();
-            checkResult(musicianDao.update(musician), resp);
+            checkResult(musicianPersistence.update(musician), resp);
         }
     }
 
@@ -71,7 +71,7 @@ public class MusicianServlet extends AbstractServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String id = req.getParameter("id");
         if (checkId(id, resp)) {
-            checkResult(musicianDao.delete(Integer.parseInt(id)), resp);
+            checkResult(musicianPersistence.delete(Integer.parseInt(id)), resp);
         }
     }
 }

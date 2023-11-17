@@ -1,4 +1,4 @@
-package com.github.balcon.venue.dao.pg;
+package com.github.balcon.venue.persistence.dao.pg;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
