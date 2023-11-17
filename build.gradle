@@ -1,7 +1,6 @@
 plugins {
     id 'war'
-    id('io.freefair.lombok') version "${lombokPlugin}"
-    id "org.hibernate.orm" version "${hibernatePlugin}"
+    id 'io.freefair.lombok' version "${lombokPlugin}"
 }
 
 war {
@@ -19,6 +18,7 @@ dependencies {
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jackson}"
     implementation "org.postgresql:postgresql:${postgres}"
     implementation "org.yaml:snakeyaml:${snakeyaml}"
+    implementation "org.hibernate.orm:hibernate-core:${hibernate}"
 
     testImplementation "org.junit.jupiter:junit-jupiter:${junit}"
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

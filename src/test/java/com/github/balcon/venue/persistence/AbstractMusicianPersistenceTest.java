@@ -51,6 +51,11 @@ public abstract class AbstractMusicianPersistenceTest extends BasePersistenceTes
     }
 
     @Test
+    void findNotExists() {
+        assertThat(musicianPersistence.find(99)).isNotPresent();
+    }
+
+    @Test
     void update() {
         int musicianId = 100;
         String newName = "New Name";
@@ -73,11 +78,25 @@ public abstract class AbstractMusicianPersistenceTest extends BasePersistenceTes
     }
 
     @Test
+    void updateNotExists() {
+        Musician musician = musicianPersistence.find(100).orElseThrow();
+        musician.setId(99);
+
+        assertThat(musicianPersistence.update(musician)).isFalse();
+    }
+
+    @Test
     void delete() {
         int musicianId = 100;
 
         assertThat(musicianPersistence.delete(musicianId)).isTrue();
         assertThat(musicianPersistence.findAll()).hasSize(7);
         assertThat(musicianPersistence.find(musicianId)).isNotPresent();
+    }
+
+    @Test
+    void deleteNotExists() {
+        assertThat(musicianPersistence.delete(99)).isFalse();
+        assertThat(musicianPersistence.findAll()).hasSize(8);
     }
 }

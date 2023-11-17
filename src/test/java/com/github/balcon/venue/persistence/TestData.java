@@ -47,6 +47,7 @@ public class TestData {
     public void erase() {
         execute("""
                 DELETE FROM event;
+                DELETE FROM musician;
                 DELETE FROM band;
                 """);
     }
