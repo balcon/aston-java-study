@@ -1,26 +1,26 @@
 package com.github.balcon.venue.servlet;
 
 import com.github.balcon.venue.ApplicationFactory;
-import com.github.balcon.venue.dao.EventDao;
-import com.github.balcon.venue.entity.Event;
+import com.github.balcon.venue.dao.MusicianDao;
+import com.github.balcon.venue.entity.Band;
+import com.github.balcon.venue.entity.Musician;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@WebServlet("/events")
-public class EventServlet extends AbstractServlet {
-    private EventDao eventDao;
+@WebServlet("/musicians")
+public class MusicianServlet extends AbstractServlet {
+    private MusicianDao musicianDao;
 
     @Override
     public void init() {
         super.init();
-        eventDao = ApplicationFactory.getDaoFactory().getEventDao();
+        musicianDao = ApplicationFactory.getDaoFactory().getMusicianDao();
     }
 
     @Override
@@ -29,12 +29,12 @@ public class EventServlet extends AbstractServlet {
         PrintWriter respWriter = resp.getWriter();
         String id = req.getParameter("id");
         if (id == null || id.isBlank()) {
-            List<Event> events = eventDao.findAll();
-            respWriter.write(mapper.writeValueAsString(events));
+            List<Musician> musicians = musicianDao.findAll();
+            respWriter.write(mapper.writeValueAsString(musicians));
         } else {
-            Optional<Event> event = eventDao.find(Integer.parseInt(id));
-            if (event.isPresent()) {
-                respWriter.write(mapper.writeValueAsString(event.get()));
+            Optional<Musician> band = musicianDao.find(Integer.parseInt(id));
+            if (band.isPresent()) {
+                respWriter.write(mapper.writeValueAsString(band.get()));
             } else {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
@@ -44,23 +44,26 @@ public class EventServlet extends AbstractServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType(JSON);
-        Event event = Event.builder()
+        Musician musician = Musician.builder()
                 .name(req.getParameter("name"))
-                .dateTime(LocalDateTime.parse(req.getParameter("dateTime")))
-                .build();
-        eventDao.save(event);
-        resp.getWriter().write(mapper.writeValueAsString(event));
+                .role(req.getParameter("role"))
+                .band(Band.builder()
+                        .id(Integer.valueOf(req.getParameter("bandId"))).build()).build();
+        musicianDao.save(musician);
+        resp.getWriter().write(mapper.writeValueAsString(musician));
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String id = req.getParameter("id");
         if (checkId(id, resp)) {
-            Event event = Event.builder()
+            Musician musician = Musician.builder()
                     .id(Integer.parseInt(id))
                     .name(req.getParameter("name"))
-                    .dateTime(LocalDateTime.parse(req.getParameter("dateTime"))).build();
-            checkResult(eventDao.update(event), resp);
+                    .role(req.getParameter("role"))
+                    .band(Band.builder()
+                            .id(Integer.valueOf(req.getParameter("bandId"))).build()).build();
+            checkResult(musicianDao.update(musician), resp);
         }
     }
 
@@ -68,7 +71,7 @@ public class EventServlet extends AbstractServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String id = req.getParameter("id");
         if (checkId(id, resp)) {
-            checkResult(eventDao.delete(Integer.parseInt(id)), resp);
+            checkResult(musicianDao.delete(Integer.parseInt(id)), resp);
         }
     }
 }
