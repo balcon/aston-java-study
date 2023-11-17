@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Getter
 @Setter
-public class Musician extends AbstractNamedEntity {
-    private String role;
-    private Band band;
+public abstract class AbstractNamedEntity {
+    private Integer id;
+    private String name;
 }
