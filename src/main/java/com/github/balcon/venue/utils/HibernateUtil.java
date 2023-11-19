@@ -1,6 +1,7 @@
 package com.github.balcon.venue.utils;
 
 import com.github.balcon.venue.entity.Band;
+import com.github.balcon.venue.entity.Event;
 import com.github.balcon.venue.entity.Musician;
 import lombok.experimental.UtilityClass;
 import org.hibernate.Session;
@@ -28,6 +29,7 @@ public class HibernateUtil {
         sessionFactory = new MetadataSources(registry)
                 .addAnnotatedClass(Musician.class)
                 .addAnnotatedClass(Band.class)
+                .addAnnotatedClass(Event.class)
                 .buildMetadata()
                 .buildSessionFactory();
     }

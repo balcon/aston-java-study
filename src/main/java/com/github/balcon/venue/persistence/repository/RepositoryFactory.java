@@ -8,6 +8,7 @@ import com.github.balcon.venue.persistence.PersistenceFactory;
 public class RepositoryFactory implements PersistenceFactory {
     private static final MusicianPersistence musicianRepository = new MusicianRepository();
     private static final BandPersistence bandRepository = new BandRepository();
+    private static final EventPersistence eventRepository = new EventRepository();
 
     @Override
     public BandPersistence getBandPersistence() {
@@ -17,7 +18,7 @@ public class RepositoryFactory implements PersistenceFactory {
 
     @Override
     public EventPersistence getEventPersistence() {
-        return null;
+        return eventRepository;
     }
 
     @Override
