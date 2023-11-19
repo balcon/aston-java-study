@@ -6,8 +6,8 @@ import lombok.experimental.FieldNameConstants;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -24,7 +24,7 @@ public class Event extends AbstractNamedEntity {
     @JoinTable(name = "event_band",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "band_id"))
-    private List<Band> bands = new ArrayList<>();
+    private Set<Band> bands = new HashSet<>();
 
     public void addBand(Band band) {
         bands.add(band);

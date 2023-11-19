@@ -4,12 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.github.balcon.venue.persistence.PersistenceFactory;
-import com.github.balcon.venue.persistence.dao.pg.PgDaoFactory;
+import com.github.balcon.venue.persistence.repository.RepositoryFactory;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class ApplicationFactory {
-    private final PersistenceFactory persistenceFactory = new PgDaoFactory();
+    private final PersistenceFactory persistenceFactory = new RepositoryFactory();
     private final ObjectMapper jsonMapper = new ObjectMapper();
 
     static {

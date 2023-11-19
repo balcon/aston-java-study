@@ -7,6 +7,8 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Objects;
+
 @MappedSuperclass
 @Getter
 @Setter
@@ -21,5 +23,22 @@ public abstract class AbstractNamedEntity {
 
     public boolean hasId() {
         return id != null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof AbstractNamedEntity entity) {
+            return Objects.equals(id, entity.id);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return id == null ? 0 : id.hashCode();
+
     }
 }

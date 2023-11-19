@@ -86,7 +86,6 @@ public class EventRepository implements EventPersistence {
         }
     }
 
-    // TODO: 19.11.2023 Check queries
     @Override
     public boolean addBand(int eventId, int bandId) {
         try (Session session = HibernateUtil.session()) {
@@ -102,7 +101,6 @@ public class EventRepository implements EventPersistence {
         }
     }
 
-    // TODO: 19.11.2023 Check queries
     @Override
     public boolean removeBand(int eventId, int bandId) {
         try (Session session = HibernateUtil.session()) {
