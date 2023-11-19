@@ -49,6 +49,11 @@ public abstract class AbstractBandPersistenceTest extends BasePersistenceTest {
     }
 
     @Test
+    void findNotExists() {
+        assertThat(bandPersistence.find(99)).isNotPresent();
+    }
+
+    @Test
     void update() {
         int bandId = 100;
         String newName = "New Band Name";
@@ -68,11 +73,24 @@ public abstract class AbstractBandPersistenceTest extends BasePersistenceTest {
     }
 
     @Test
+    void updateNotExists() {
+        Band band = bandPersistence.find(100).orElseThrow();
+        band.setId(99);
+
+        assertThat(bandPersistence.update(band)).isFalse();
+    }
+
+    @Test
     void delete() {
         int bandId = 100;
 
         assertThat(bandPersistence.delete(bandId)).isTrue();
         assertThat(bandPersistence.findAll()).hasSize(3);
         assertThat(bandPersistence.find(bandId)).isNotPresent();
+    }
+
+    @Test
+    void deleteNotExists() {
+        assertThat(bandPersistence.delete(99)).isFalse();
     }
 }

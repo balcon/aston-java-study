@@ -7,10 +7,12 @@ import com.github.balcon.venue.persistence.PersistenceFactory;
 
 public class RepositoryFactory implements PersistenceFactory {
     private static final MusicianPersistence musicianRepository = new MusicianRepository();
+    private static final BandPersistence bandRepository = new BandRepository();
 
     @Override
     public BandPersistence getBandPersistence() {
-        return null;
+
+        return bandRepository;
     }
 
     @Override

@@ -19,6 +19,7 @@ public class MusicianRepository implements MusicianPersistence {
         }
     }
 
+    // Avoid LazyInitException with JOIN FETCH
     @Override
     public Optional<Musician> find(int id) {
         String query = "SELECT m FROM Musician m JOIN FETCH m.band WHERE m.id = :id";
@@ -57,9 +58,11 @@ public class MusicianRepository implements MusicianPersistence {
         }
     }
 
-    // TODO: 18.11.2023 Do it better
     @Override
     public boolean update(Musician musician) {
+        if (!musician.hasId()) {
+            return false;
+        }
         try (Session session = HibernateUtil.session()) {
             session.beginTransaction();
             if (session.get(Musician.class, musician.getId()) == null) {
@@ -68,22 +71,20 @@ public class MusicianRepository implements MusicianPersistence {
             session.merge(musician);
             session.getTransaction().commit();
             return true;
-        } catch (Exception e) {
-            return false;
         }
     }
 
-    // TODO: 18.11.2023 Do it better
     @Override
     public boolean delete(int id) {
         try (Session session = HibernateUtil.session()) {
             session.beginTransaction();
-
-            session.remove(Musician.builder().id(id).build());
+            Musician musician = session.get(Musician.class, id);
+            if (musician == null) {
+                return false;
+            }
+            session.remove(musician);
             session.getTransaction().commit();
             return true;
-        } catch (Exception e) {
-            return false;
         }
     }
 }

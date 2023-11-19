@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import lombok.*;
+import lombok.experimental.FieldNameConstants;
 import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import java.util.List;
 @Setter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(callSuper = true)
+@FieldNameConstants
 public class Band extends AbstractNamedEntity {
     @Builder.Default
     @OneToMany(mappedBy = "band", fetch = FetchType.LAZY)
