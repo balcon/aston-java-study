@@ -5,6 +5,8 @@ import com.github.balcon.venue.entity.Event;
 import com.github.balcon.venue.entity.Musician;
 import com.github.balcon.venue.entity.equipment.Amplifier;
 import com.github.balcon.venue.entity.equipment.Mixer;
+import com.github.balcon.venue.entity.indexes.IndexedEntity;
+import com.github.balcon.venue.entity.indexes.UnindexedEntity;
 import lombok.experimental.UtilityClass;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -34,6 +36,8 @@ public class HibernateUtil {
                 .addAnnotatedClass(Event.class)
                 .addAnnotatedClass(Amplifier.class)
                 .addAnnotatedClass(Mixer.class)
+                .addAnnotatedClass(IndexedEntity.class)
+                .addAnnotatedClass(UnindexedEntity.class)
                 .buildMetadata()
                 .buildSessionFactory();
     }

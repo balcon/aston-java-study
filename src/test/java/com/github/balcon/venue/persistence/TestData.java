@@ -52,6 +52,20 @@ public class TestData {
                 """);
     }
 
+    public void randomize() {
+        execute("""                        
+                INSERT INTO indexed_entity (random)
+                SELECT FLOOR(RANDOM() * 100000)
+                FROM generate_series(1, 3000000);
+                """);
+
+        execute("""                        
+                INSERT INTO unindexed_entity (random)
+                SELECT FLOOR(RANDOM() * 100000)
+                FROM generate_series(1, 3000000);
+                """);
+    }
+
     private static void execute(String sql) {
         try (Connection connection = ConnectionManager.connection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
