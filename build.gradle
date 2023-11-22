@@ -19,12 +19,13 @@ dependencies {
     implementation "org.postgresql:postgresql:${postgres}"
     implementation "org.yaml:snakeyaml:${snakeyaml}"
     implementation "org.hibernate.orm:hibernate-core:${hibernate}"
+    implementation "org.springframework.data:spring-data-jpa:${springDataJpa}"
 
     testImplementation "org.junit.jupiter:junit-jupiter:${junit}"
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testImplementation "org.assertj:assertj-core:${asserJ}"
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
 }

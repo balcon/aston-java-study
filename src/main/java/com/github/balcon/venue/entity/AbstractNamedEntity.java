@@ -1,13 +1,8 @@
 package com.github.balcon.venue.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.util.Objects;
 
 @MappedSuperclass
 @Getter
@@ -15,30 +10,16 @@ import java.util.Objects;
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
+@EqualsAndHashCode(of = "id")
 public abstract class AbstractNamedEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "main_seq", allocationSize = 1, initialValue = 1000)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "main_seq")
     private Integer id;
+
     private String name;
 
     public boolean hasId() {
         return id != null;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o instanceof AbstractNamedEntity entity) {
-            return Objects.equals(id, entity.id);
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return id == null ? 0 : id.hashCode();
-
     }
 }

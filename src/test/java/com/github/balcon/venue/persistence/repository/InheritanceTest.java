@@ -1,8 +1,8 @@
 package com.github.balcon.venue.persistence.repository;
 
-import com.github.balcon.venue.entity.equipment.Amplifier;
-import com.github.balcon.venue.entity.equipment.Equipment;
-import com.github.balcon.venue.entity.equipment.Mixer;
+import com.github.balcon.venue.entity.Amplifier;
+import com.github.balcon.venue.entity.Equipment;
+import com.github.balcon.venue.entity.Mixer;
 import com.github.balcon.venue.utils.HibernateUtil;
 import org.hibernate.Session;
 import org.junit.jupiter.api.MethodOrderer;
