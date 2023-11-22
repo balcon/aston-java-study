@@ -7,16 +7,16 @@ import org.junit.jupiter.api.BeforeEach;
 public abstract class BasePersistenceTest {
     @BeforeAll
     static void beforeAll() {
-        TestData.erase();
+        TestDataLegacy.erase();
     }
 
     @BeforeEach
     void setUp() {
-        TestData.populate();
+        TestDataLegacy.populate();
     }
 
     @AfterEach
     void tearDown() {
-        TestData.erase();
+        TestDataLegacy.erase();
     }
 }
