@@ -1,10 +1,9 @@
 package com.github.balcon.venue.service;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface AbstractService<T, R> {
-    Optional<R> findById(int id);
+    R findById(int id);
 
     List<R> findAll();
 
