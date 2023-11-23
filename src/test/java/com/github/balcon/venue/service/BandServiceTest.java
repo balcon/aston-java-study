@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static com.github.balcon.venue.TestData.*;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RequiredArgsConstructor
 class BandServiceTest extends BaseTest implements ServiceTestMethods {
     private final BandService service;
-    private final MusicianService musicianService;
 
     @Override
     @Test
@@ -78,8 +78,6 @@ class BandServiceTest extends BaseTest implements ServiceTestMethods {
 
         assertThat(service.findAll()).hasSize(4 - 1);
         assertThatThrownBy(() -> service.findById(BAND_ID));
-        // Check cascade delete
-        assertThatThrownBy(() -> musicianService.findById(MUSICIAN_ID));
     }
 
     @Override

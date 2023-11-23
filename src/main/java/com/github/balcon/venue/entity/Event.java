@@ -16,7 +16,10 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
 @FieldNameConstants
+@NamedEntityGraph(name = Event.INCLUDE_BANDS, attributeNodes = @NamedAttributeNode("bands"))
 public class Event extends AbstractNamedEntity {
+    public static final String INCLUDE_BANDS = "Event.bands";
+
     @Column(name = "date_time")
     private LocalDateTime dateTime;
     @Builder.Default
