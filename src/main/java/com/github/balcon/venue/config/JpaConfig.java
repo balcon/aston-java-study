@@ -28,9 +28,10 @@ public class JpaConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(env.getRequiredProperty("datasource.driver"));
         dataSource.setUrl(env.getProperty("datasource.url"));
         dataSource.setUsername(env.getProperty("datasource.username"));
-        dataSource.setPassword("datasource.password");
+        dataSource.setPassword(env.getProperty("datasource.password"));
         return dataSource;
     }
 

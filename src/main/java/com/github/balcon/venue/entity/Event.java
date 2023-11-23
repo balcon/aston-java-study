@@ -2,7 +2,6 @@ package com.github.balcon.venue.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.FieldNameConstants;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
@@ -15,7 +14,6 @@ import java.util.Set;
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
-@FieldNameConstants
 @NamedEntityGraph(name = Event.INCLUDE_BANDS, attributeNodes = @NamedAttributeNode("bands"))
 public class Event extends AbstractNamedEntity {
     public static final String INCLUDE_BANDS = "Event.bands";

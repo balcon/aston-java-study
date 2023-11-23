@@ -17,7 +17,6 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-databind:${jackson}"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jackson}"
     implementation "org.postgresql:postgresql:${postgres}"
-    implementation "org.yaml:snakeyaml:${snakeyaml}"
     implementation "org.hibernate.orm:hibernate-core:${hibernate}"
     implementation "org.springframework.data:spring-data-jpa:${springDataJpa}"
     implementation "org.mapstruct:mapstruct:${mapstruct}"
