@@ -2,14 +2,14 @@ package com.github.balcon.venue.service;
 
 import java.util.List;
 
-public interface AbstractService<T, R> {
+public interface AbstractService<R, W> {
     R findById(int id);
 
     List<R> findAll();
 
-    R save(T entity);
+    R save(W writeDto);
 
-    void update(int id, T entity);
+    void update(int id, W dto);
 
     void delete(int id);
 }

@@ -1,4 +1,9 @@
 package com.github.balcon.venue.dto;
 
-public class MusicianDto {
+import lombok.Builder;
+
+@Builder
+public record MusicianDto(int id,
+                          String name,
+                          String role) {
 }

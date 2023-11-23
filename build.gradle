@@ -21,6 +21,7 @@ dependencies {
     implementation "org.hibernate.orm:hibernate-core:${hibernate}"
     implementation "org.springframework.data:spring-data-jpa:${springDataJpa}"
     implementation "org.mapstruct:mapstruct:${mapstruct}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct}"
 
     testImplementation "org.springframework:spring-test:${spring}"
     testImplementation "org.junit.jupiter:junit-jupiter:${junit}"

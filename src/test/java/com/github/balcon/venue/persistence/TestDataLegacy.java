@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @UtilityClass
-public class TestData {
+public class TestDataLegacy {
     public void populate() {
         execute("""
                 INSERT INTO band (id, name)
