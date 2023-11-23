@@ -9,7 +9,7 @@ import java.util.List;
 public interface EventService extends AbstractService<EventReadDto, EventWriteDto> {
     List<EventReadDto> findByDate(LocalDate date);
 
-    void addBand(int serviceId, int bandId);
+    void addBand(int eventId, int bandId);
 
-    void removeBand(int serviceId, int bandId);
+    void removeBand(int eventId, int bandId);
 }

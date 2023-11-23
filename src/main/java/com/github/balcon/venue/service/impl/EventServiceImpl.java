@@ -70,8 +70,8 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public void addBand(int serviceId, int bandId) {
-        Event event = repository.findById(serviceId).orElseThrow();
+    public void addBand(int eventId, int bandId) {
+        Event event = repository.findById(eventId).orElseThrow();
         Band band = bandRepository.findById(bandId).orElseThrow();
         event.addBand(band);
         repository.save(event);
@@ -79,8 +79,8 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public void removeBand(int serviceId, int bandId) {
-        Event event = repository.findById(serviceId).orElseThrow();
+    public void removeBand(int eventId, int bandId) {
+        Event event = repository.findById(eventId).orElseThrow();
         Band band = bandRepository.findById(bandId).orElseThrow();
         event.removeBand(band);
         repository.save(event);
