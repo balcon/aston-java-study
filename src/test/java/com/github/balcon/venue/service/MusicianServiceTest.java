@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static com.github.balcon.venue.TestData.*;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RequiredArgsConstructor
 class MusicianServiceTest extends BaseTest implements ServiceTestMethods {
@@ -21,7 +22,11 @@ class MusicianServiceTest extends BaseTest implements ServiceTestMethods {
     public void findById() {
         MusicianReadDto musicianDto = service.findById(TestData.MUSICIAN_ID);
 
-        assertThat(musicianDto).isEqualTo(MUSICIAN);
+        assertThat(musicianDto).isEqualTo(MusicianReadDto.builder()
+                .id(120)
+                .name("Musician #120")
+                .role("Singer")
+                .band(BAND).build());
     }
 
     @Override

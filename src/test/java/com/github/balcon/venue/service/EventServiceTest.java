@@ -10,21 +10,18 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.github.balcon.venue.TestData.BAND_ID;
-import static com.github.balcon.venue.TestData.DUMMY_ID;
+import static com.github.balcon.venue.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RequiredArgsConstructor
 class EventServiceTest extends BaseTest implements ServiceTestMethods {
-    public static final int ID = 110;
-
     private final EventService service;
 
     @Override
     @Test
     public void findById() {
-        EventReadDto event = service.findById(ID);
+        EventReadDto event = service.findById(EVENT_ID);
 
         assertThat(event.name()).isEqualTo("First Event");
         assertThat(event.bands()).hasSize(3);
@@ -72,8 +69,8 @@ class EventServiceTest extends BaseTest implements ServiceTestMethods {
     public void update() {
         EventWriteDto edited = EventWriteDto.builder()
                 .name("New Name").build();
-        service.update(ID, edited);
-        EventReadDto event = service.findById(ID);
+        service.update(EVENT_ID, edited);
+        EventReadDto event = service.findById(EVENT_ID);
 
         assertThat(event.name()).isEqualTo(edited.name());
         assertThat(event.dateTime()).isNotNull();
@@ -90,10 +87,10 @@ class EventServiceTest extends BaseTest implements ServiceTestMethods {
     @Override
     @Test
     public void delete() {
-        service.delete(ID);
+        service.delete(EVENT_ID);
 
         assertThat(service.findAll()).hasSize(3 - 1);
-        assertThatThrownBy(() -> service.findById(ID));
+        assertThatThrownBy(() -> service.findById(EVENT_ID));
     }
 
     @Override
@@ -105,8 +102,8 @@ class EventServiceTest extends BaseTest implements ServiceTestMethods {
     @Test
     void addBand() {
         int bandId = 103;
-        service.addBand(ID, bandId);
-        EventReadDto event = service.findById(ID);
+        service.addBand(EVENT_ID, bandId);
+        EventReadDto event = service.findById(EVENT_ID);
 
         assertThat(event.bands()).hasSize(3 + 1);
         assertThat(event.bands().stream()
@@ -116,13 +113,13 @@ class EventServiceTest extends BaseTest implements ServiceTestMethods {
 
     @Test
     void addBandNotExists() {
-        assertThatThrownBy(() -> service.addBand(ID, DUMMY_ID));
+        assertThatThrownBy(() -> service.addBand(EVENT_ID, DUMMY_ID));
     }
 
     @Test
     void removeBand() {
-        service.removeBand(ID, BAND_ID);
-        EventReadDto event = service.findById(ID);
+        service.removeBand(EVENT_ID, BAND_ID);
+        EventReadDto event = service.findById(EVENT_ID);
 
         assertThat(event.bands()).hasSize(3 - 1);
         assertThat(event.bands().stream()
@@ -132,6 +129,6 @@ class EventServiceTest extends BaseTest implements ServiceTestMethods {
 
     @Test
     void removeBandNotExists() {
-        assertThatThrownBy(() -> service.removeBand(ID, DUMMY_ID));
+        assertThatThrownBy(() -> service.removeBand(EVENT_ID, DUMMY_ID));
     }
 }

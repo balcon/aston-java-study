@@ -13,18 +13,23 @@ repositories {
 }
 
 dependencies {
+    // Persistence
+    implementation "org.springframework.data:spring-data-jpa:${springDataJpa}"
+    implementation "org.hibernate.orm:hibernate-core:${hibernate}"
+    implementation "org.postgresql:postgresql:${postgres}"
+
+    // Web
     compileOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServlet}"
     implementation "org.springframework:spring-webmvc:${spring}"
     implementation "com.fasterxml.jackson.core:jackson-databind:${jackson}"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jackson}"
-    implementation "org.postgresql:postgresql:${postgres}"
-    implementation "org.hibernate.orm:hibernate-core:${hibernate}"
-    implementation "org.springframework.data:spring-data-jpa:${springDataJpa}"
+
+    // Other
     implementation "org.mapstruct:mapstruct:${mapstruct}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct}"
     implementation "org.apache.logging.log4j:log4j-core:${log4j}"
 
-
+    // Test
     testImplementation "org.springframework:spring-test:${spring}"
     testImplementation "org.junit.jupiter:junit-jupiter:${junit}"
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
