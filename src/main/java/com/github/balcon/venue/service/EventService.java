@@ -1,7 +1,15 @@
 package com.github.balcon.venue.service;
 
-import com.github.balcon.venue.dto.EventDto;
-import com.github.balcon.venue.entity.Event;
+import com.github.balcon.venue.dto.EventReadDto;
+import com.github.balcon.venue.dto.EventWriteDto;
 
-public interface EventService extends AbstractService<Event, EventDto> {
+import java.time.LocalDate;
+import java.util.List;
+
+public interface EventService extends AbstractService<EventReadDto, EventWriteDto> {
+    List<EventReadDto> findByDate(LocalDate date);
+
+    void addBand(int serviceId, int bandId);
+
+    void removeBand(int serviceId, int bandId);
 }
