@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bands</title>
+</head>
+<body>
+<table style="border-style: solid">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Musician</th>
+        <th></th>
+    </tr>
+    <tr th:each="band : ${bands}">
+        <td th:text="${band.id}">Band id</td>
+        <td th:text="${band.name}">Band name</td>
+        <td>
+            <ul>
+                <li th:each="musician : ${band.musicians}"
+                    th:text="|${musician.id()} : ${musician.name()} (${musician.role})|">Musician
+                </li>
+            </ul>
+        </td>
+        <td>
+            <form th:action="@{'bands/delete/' + ${band.id}}" method="post">
+                <button type="submit">-</button>
+            </form>
+        </td>
+    </tr>
+    <form method="post">
+        <tr>
+            <td></td>
+            <td colspan="2"><input type="text" name="name"></td>
+            <td>
+                <button type="submit">+</button>
+            </td>
+        </tr>
+    </form>
+</table>
+</body>
+</html>

@@ -16,7 +16,7 @@ import static com.github.balcon.venue.config.WebConfig.API;
 @RestController
 @RequestMapping(API + "/events")
 @RequiredArgsConstructor
-public class EventController {
+public class EventRestController {
     private final EventService service;
 
     @GetMapping

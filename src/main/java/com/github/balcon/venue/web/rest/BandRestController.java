@@ -14,7 +14,7 @@ import static com.github.balcon.venue.config.WebConfig.API;
 @RestController
 @RequestMapping(API + "/bands")
 @RequiredArgsConstructor
-public class BandController {
+public class BandRestController {
     private final BandService service;
 
     @GetMapping

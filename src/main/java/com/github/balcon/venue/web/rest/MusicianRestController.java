@@ -15,7 +15,7 @@ import static com.github.balcon.venue.config.WebConfig.API;
 @RestController
 @RequestMapping(API + "/musicians")
 @RequiredArgsConstructor
-public class MusicianController {
+public class MusicianRestController {
     private final MusicianService service;
 
     @GetMapping

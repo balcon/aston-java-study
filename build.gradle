@@ -23,6 +23,8 @@ dependencies {
     implementation "org.springframework:spring-webmvc:${spring}"
     implementation "com.fasterxml.jackson.core:jackson-databind:${jackson}"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jackson}"
+    implementation "org.thymeleaf:thymeleaf:${thymeleaf}"
+    implementation "org.thymeleaf:thymeleaf-spring6:${thymeleaf}"
 
     // Other
     implementation "org.mapstruct:mapstruct:${mapstruct}"
