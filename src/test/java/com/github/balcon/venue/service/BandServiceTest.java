@@ -3,6 +3,7 @@ package com.github.balcon.venue.service;
 import com.github.balcon.venue.BaseTest;
 import com.github.balcon.venue.dto.BandReadDto;
 import com.github.balcon.venue.dto.BandWriteDto;
+import com.github.balcon.venue.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +38,7 @@ class BandServiceTest extends BaseTest implements ServiceTestMethods {
     @Override
     @Test
     public void findByIdNotExists() {
-        assertThatThrownBy(() -> service.findById(DUMMY_ID));
+        assertThatThrownBy(() -> service.findById(DUMMY_ID)).isInstanceOf(ResourceNotFoundException.class);
     }
 
     @Override
@@ -68,7 +69,7 @@ class BandServiceTest extends BaseTest implements ServiceTestMethods {
     public void updateNotExists() {
         BandWriteDto dummy = BandWriteDto.builder().build();
 
-        assertThatThrownBy(() -> service.update(DUMMY_ID, dummy));
+        assertThatThrownBy(() -> service.update(DUMMY_ID, dummy)).isInstanceOf(ResourceNotFoundException.class);
     }
 
     @Override
@@ -83,6 +84,6 @@ class BandServiceTest extends BaseTest implements ServiceTestMethods {
     @Override
     @Test
     public void deleteNotExists() {
-        assertThatThrownBy(() -> service.delete(DUMMY_ID));
+        assertThatThrownBy(() -> service.delete(DUMMY_ID)).isInstanceOf(ResourceNotFoundException.class);
     }
 }

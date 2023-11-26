@@ -3,6 +3,7 @@ package com.github.balcon.venue.service;
 import com.github.balcon.venue.BaseTest;
 import com.github.balcon.venue.dto.EventReadDto;
 import com.github.balcon.venue.dto.EventWriteDto;
+import com.github.balcon.venue.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 
@@ -49,7 +50,7 @@ class EventServiceTest extends BaseTest implements ServiceTestMethods {
     @Override
     @Test
     public void findByIdNotExists() {
-        assertThatThrownBy(() -> service.findById(DUMMY_ID));
+        assertThatThrownBy(() -> service.findById(DUMMY_ID)).isInstanceOf(ResourceNotFoundException.class);
     }
 
     @Override
@@ -81,7 +82,7 @@ class EventServiceTest extends BaseTest implements ServiceTestMethods {
     public void updateNotExists() {
         EventWriteDto dummy = EventWriteDto.builder().build();
 
-        assertThatThrownBy(() -> service.update(DUMMY_ID, dummy));
+        assertThatThrownBy(() -> service.update(DUMMY_ID, dummy)).isInstanceOf(ResourceNotFoundException.class);
     }
 
     @Override
@@ -96,7 +97,7 @@ class EventServiceTest extends BaseTest implements ServiceTestMethods {
     @Override
     @Test
     public void deleteNotExists() {
-        assertThatThrownBy(() -> service.delete(DUMMY_ID));
+        assertThatThrownBy(() -> service.delete(DUMMY_ID)).isInstanceOf(ResourceNotFoundException.class);
     }
 
     @Test
@@ -113,7 +114,7 @@ class EventServiceTest extends BaseTest implements ServiceTestMethods {
 
     @Test
     void addBandNotExists() {
-        assertThatThrownBy(() -> service.addBand(EVENT_ID, DUMMY_ID));
+        assertThatThrownBy(() -> service.addBand(EVENT_ID, DUMMY_ID)).isInstanceOf(ResourceNotFoundException.class);
     }
 
     @Test
@@ -129,6 +130,6 @@ class EventServiceTest extends BaseTest implements ServiceTestMethods {
 
     @Test
     void removeBandNotExists() {
-        assertThatThrownBy(() -> service.removeBand(EVENT_ID, DUMMY_ID));
+        assertThatThrownBy(() -> service.removeBand(EVENT_ID, DUMMY_ID)).isInstanceOf(ResourceNotFoundException.class);
     }
 }

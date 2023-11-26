@@ -50,11 +50,13 @@ public class EventRestController {
     }
 
     @PostMapping("/{eventId}/bands/{bandId}")
+    @ResponseStatus(HttpStatus.CREATED)
     public void addBand(@PathVariable("eventId") int eventId, @PathVariable("bandId") int bandId) {
         service.addBand(eventId, bandId);
     }
 
     @DeleteMapping("/{eventId}/bands/{bandId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeBand(@PathVariable("eventId") int eventId, @PathVariable("bandId") int bandId) {
         service.removeBand(eventId, bandId);
     }

@@ -4,6 +4,7 @@ import com.github.balcon.venue.dto.BandReadDto;
 import com.github.balcon.venue.dto.BandWriteDto;
 import com.github.balcon.venue.dto.mapper.BandMapper;
 import com.github.balcon.venue.entity.Band;
+import com.github.balcon.venue.exception.ResourceNotFoundException;
 import com.github.balcon.venue.repository.BandRepository;
 import com.github.balcon.venue.service.BandService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class BandServiceImpl implements BandService {
     public BandReadDto findById(int id) {
         return repository.findById(id)
                 .map(mapper::toDto)
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("Band", id));
     }
 
     @Override
@@ -44,7 +45,7 @@ public class BandServiceImpl implements BandService {
     @Override
     @Transactional
     public void update(int id, BandWriteDto dto) {
-        Band band = repository.findById(id).orElseThrow();
+        Band band = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Band", id));
         band.setName(requireNonNullElse(dto.name(), band.getName()));
         repository.save(band);
     }
@@ -52,7 +53,7 @@ public class BandServiceImpl implements BandService {
     @Override
     @Transactional
     public void delete(int id) {
-        repository.findById(id).orElseThrow();
+        repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Band", id));
         repository.deleteById(id);
     }
 }

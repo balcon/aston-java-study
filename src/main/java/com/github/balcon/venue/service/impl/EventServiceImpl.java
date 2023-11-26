@@ -5,6 +5,7 @@ import com.github.balcon.venue.dto.EventWriteDto;
 import com.github.balcon.venue.dto.mapper.EventMapper;
 import com.github.balcon.venue.entity.Band;
 import com.github.balcon.venue.entity.Event;
+import com.github.balcon.venue.exception.ResourceNotFoundException;
 import com.github.balcon.venue.repository.BandRepository;
 import com.github.balcon.venue.repository.EventRepository;
 import com.github.balcon.venue.service.EventService;
@@ -29,7 +30,7 @@ public class EventServiceImpl implements EventService {
     public EventReadDto findById(int id) {
         return repository.findById(id)
                 .map(mapper::toDto)
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("Event", id));
     }
 
     @Override
@@ -55,7 +56,7 @@ public class EventServiceImpl implements EventService {
     @Override
     @Transactional
     public void update(int id, EventWriteDto dto) {
-        Event event = repository.findById(id).orElseThrow();
+        Event event = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Event", id));
         event.setName(requireNonNullElse(dto.name(), event.getName()));
         event.setDateTime(requireNonNullElse(dto.dateTime(), event.getDateTime()));
         repository.save(event);
@@ -64,15 +65,15 @@ public class EventServiceImpl implements EventService {
     @Override
     @Transactional
     public void delete(int id) {
-        repository.findById(id).orElseThrow();
+        repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Event", id));
         repository.deleteById(id);
     }
 
     @Override
     @Transactional
     public void addBand(int eventId, int bandId) {
-        Event event = repository.findById(eventId).orElseThrow();
-        Band band = bandRepository.findById(bandId).orElseThrow();
+        Event event = repository.findById(eventId).orElseThrow(() -> new ResourceNotFoundException("Event", eventId));
+        Band band = bandRepository.findById(bandId).orElseThrow(() -> new ResourceNotFoundException("Band", bandId));
         event.addBand(band);
         repository.save(event);
     }
@@ -80,8 +81,8 @@ public class EventServiceImpl implements EventService {
     @Override
     @Transactional
     public void removeBand(int eventId, int bandId) {
-        Event event = repository.findById(eventId).orElseThrow();
-        Band band = bandRepository.findById(bandId).orElseThrow();
+        Event event = repository.findById(eventId).orElseThrow(() -> new ResourceNotFoundException("Event", eventId));
+        Band band = bandRepository.findById(bandId).orElseThrow(() -> new ResourceNotFoundException("Band", bandId));
         event.removeBand(band);
         repository.save(event);
     }
