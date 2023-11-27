@@ -3,6 +3,7 @@ package com.github.balcon.venue.web.rest;
 import com.github.balcon.venue.dto.BandReadDto;
 import com.github.balcon.venue.dto.BandWriteDto;
 import com.github.balcon.venue.service.BandService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -29,13 +30,13 @@ public class BandRestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BandReadDto create(@RequestBody BandWriteDto band) {
+    public BandReadDto create(@RequestBody @Valid BandWriteDto band) {
         return service.save(band);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable("id") int id, @RequestBody BandWriteDto band) {
+    public void update(@PathVariable("id") int id, @RequestBody @Valid BandWriteDto band) {
         service.update(id, band);
     }
 

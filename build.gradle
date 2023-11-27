@@ -30,6 +30,7 @@ dependencies {
     implementation "org.mapstruct:mapstruct:${mapstruct}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct}"
     implementation "org.apache.logging.log4j:log4j-core:${log4j}"
+    implementation "org.hibernate.validator:hibernate-validator:${hibernateValidator}"
 
     // Test
     testImplementation "org.springframework:spring-test:${spring}"

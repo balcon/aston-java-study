@@ -3,6 +3,7 @@ package com.github.balcon.venue.web.rest;
 import com.github.balcon.venue.dto.MusicianReadDto;
 import com.github.balcon.venue.dto.MusicianWriteDto;
 import com.github.balcon.venue.service.MusicianService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -32,13 +33,13 @@ public class MusicianRestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MusicianReadDto create(@RequestBody MusicianWriteDto musician) {
+    public MusicianReadDto create(@RequestBody @Valid MusicianWriteDto musician) {
         return service.save(musician);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable("id") int id, @RequestBody MusicianWriteDto musician) {
+    public void update(@PathVariable("id") int id, @RequestBody @Valid MusicianWriteDto musician) {
         service.update(id, musician);
     }
 

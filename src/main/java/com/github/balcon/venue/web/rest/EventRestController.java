@@ -3,6 +3,7 @@ package com.github.balcon.venue.web.rest;
 import com.github.balcon.venue.dto.EventReadDto;
 import com.github.balcon.venue.dto.EventWriteDto;
 import com.github.balcon.venue.service.EventService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -33,13 +34,13 @@ public class EventRestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EventReadDto create(@RequestBody EventWriteDto event) {
+    public EventReadDto create(@RequestBody @Valid EventWriteDto event) {
         return service.save(event);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable("id") int id, @RequestBody EventWriteDto event) {
+    public void update(@PathVariable("id") int id, @RequestBody @Valid EventWriteDto event) {
         service.update(id, event);
     }
 
@@ -49,7 +50,7 @@ public class EventRestController {
         service.delete(id);
     }
 
-    @PostMapping("/{eventId}/bands/{bandId}")
+    @PutMapping("/{eventId}/bands/{bandId}")
     @ResponseStatus(HttpStatus.CREATED)
     public void addBand(@PathVariable("eventId") int eventId, @PathVariable("bandId") int bandId) {
         service.addBand(eventId, bandId);
