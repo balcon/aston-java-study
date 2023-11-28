@@ -1,0 +1,28 @@
+spring:
+  profiles.default: dev
+  jpa:
+    hibernate.ddl-auto: validate
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+
+---
+spring:
+  config.activate.on-profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: postgres
+    password: postgres
+
+---
+spring:
+  config.activate.on-profile: test
+  datasource:
+    url: jdbc:postgresql://localhost:5435/postgres
+    username: postgres
+    password: postgres

@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-import static com.github.balcon.venue.config.WebConfig.API;
+import static com.github.balcon.venue.config.ApplicationConfig.REST_API;
 
 @RestController
-@RequestMapping(API + "/musicians")
+@RequestMapping(REST_API + "/musicians")
 @RequiredArgsConstructor
 public class MusicianRestController {
     private final MusicianService service;

@@ -12,10 +12,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static com.github.balcon.venue.config.WebConfig.API;
+import static com.github.balcon.venue.config.ApplicationConfig.REST_API;
 
 @RestController
-@RequestMapping(API + "/events")
+@RequestMapping(REST_API + "/events")
 @RequiredArgsConstructor
 public class EventRestController {
     private final EventService service;
