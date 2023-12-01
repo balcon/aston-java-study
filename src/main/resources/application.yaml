@@ -10,6 +10,15 @@ spring:
         highlight_sql: true
   datasource:
     driver-class-name: org.postgresql.Driver
+  output.ansi.enabled: always
+
+logging.pattern.dateformat: yyyy-MM-dd HH:mm:ss
+
+app:
+  service:
+    logger:
+      enabled: true
+      exceptions-type-only: true
 
 ---
 spring:

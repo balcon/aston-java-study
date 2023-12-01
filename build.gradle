@@ -5,7 +5,6 @@ plugins {
     id 'io.freefair.lombok' version "${lombokPlugin}"
 }
 
-archivesBaseName = 'venue'
 group = 'com.github.balcon'
 version = '0.0.1-SNAPSHOT'
 
@@ -32,6 +31,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation "org.mapstruct:mapstruct:${mapstruct}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct}"
+    implementation project(':service-logger-starter')
 
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
