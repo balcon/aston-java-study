@@ -14,11 +14,9 @@ spring:
 
 logging.pattern.dateformat: yyyy-MM-dd HH:mm:ss
 
-app:
-  service:
-    logger:
-      enabled: true
-      exceptions-type-only: true
+app.service.logger:
+  enabled: false
+  exceptions-type-only: true
 
 ---
 spring:
@@ -27,6 +25,8 @@ spring:
     url: jdbc:postgresql://localhost:5433/postgres
     username: postgres
     password: postgres
+
+management.endpoints.web.exposure.include: health, prometheus
 
 ---
 spring:
