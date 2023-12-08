@@ -3,8 +3,18 @@ package com.github.balcon.venue.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+
+/**
+ * Base class for equipment entities.
+ *
+ * @author Konstantin Balykov
+ */
 
 @Entity
 @Getter
@@ -14,5 +24,5 @@ import lombok.experimental.SuperBuilder;
 @Inheritance(strategy = InheritanceType.JOINED)
 @ToString(callSuper = true)
 public abstract class Equipment extends AbstractNamedEntity {
-    private String manufacturer;
+  private String manufacturer;
 }

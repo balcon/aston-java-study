@@ -2,8 +2,18 @@ package com.github.balcon.venue.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+
+/**
+ * Entity class for amplifiers.
+ *
+ * @author Konstantin Balykov
+ */
 
 @Entity
 @Getter
@@ -13,7 +23,7 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 @PrimaryKeyJoinColumn(name = "equipment_id")
 public class Amplifier extends Equipment {
-    private int power;
+  private int power;
 
-    private int channels;
+  private int channels;
 }

@@ -11,29 +11,39 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Web controller for {@link com.github.balcon.venue.entity.Musician}.
+ *
+ * @author Konstantin Balykov
+ */
+
 @Controller
 @RequestMapping("/musicians")
 @RequiredArgsConstructor
 public class MusicianController {
-    private final MusicianService service;
-    private final BandService bandService;
+  private final MusicianService service;
+  private final BandService bandService;
 
-    @GetMapping
-    public String getAll(Model model) {
-        model.addAttribute("musicians", service.findAll());
-        model.addAttribute("bands", bandService.findAll());
-        return "musicians";
-    }
+  /**
+   * Method description.
+   */
 
-    @PostMapping
-    public String create(MusicianWriteDto dto) {
-        service.save(dto);
-        return "redirect:/musicians";
-    }
+  @GetMapping
+  public String getAll(Model model) {
+    model.addAttribute("musicians", service.findAll());
+    model.addAttribute("bands", bandService.findAll());
+    return "musicians";
+  }
 
-    @PostMapping("/delete/{id}")
-    public String delete(@PathVariable("id") int id) {
-        service.delete(id);
-        return "redirect:/musicians";
-    }
+  @PostMapping
+  public String create(MusicianWriteDto dto) {
+    service.save(dto);
+    return "redirect:/musicians";
+  }
+
+  @PostMapping("/delete/{id}")
+  public String delete(@PathVariable("id") int id) {
+    service.delete(id);
+    return "redirect:/musicians";
+  }
 }

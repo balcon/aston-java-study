@@ -8,6 +8,12 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Module autoconfiguration.
+ *
+ * @author Konstantin Balykov
+ */
+
 @Configuration
 @EnableConfigurationProperties(ServiceLoggerProperties.class)
 @RequiredArgsConstructor
@@ -15,10 +21,10 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnProperty(prefix = ServiceLoggerProperties.PREFIX,
         name = ServiceLoggerProperties.Fields.enabled, havingValue = "true")
 public class ServiceLoggerAutoconfiguration {
-    private final ServiceLoggerProperties properties;
+  private final ServiceLoggerProperties properties;
 
-    @Bean
-    public ServiceLogger serviceLogger() {
-        return new ServiceLogger(properties);
-    }
+  @Bean
+  public ServiceLogger serviceLogger() {
+    return new ServiceLogger(properties);
+  }
 }

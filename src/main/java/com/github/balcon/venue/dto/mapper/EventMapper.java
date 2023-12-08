@@ -5,9 +5,15 @@ import com.github.balcon.venue.dto.EventWriteDto;
 import com.github.balcon.venue.entity.Event;
 import org.mapstruct.Mapper;
 
+/**
+ * MapStruct mapper for {@link Event}.
+ *
+ * @author Konstantin Balykov
+ */
+
 @Mapper
 public interface EventMapper {
-    EventReadDto toDto(Event event);
+  EventReadDto toDto(Event event);
 
-    Event toEntity(EventWriteDto eventWriteDto);
+  Event toEntity(EventWriteDto eventWriteDto);
 }

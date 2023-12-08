@@ -10,27 +10,33 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Web controller for {@link com.github.balcon.venue.entity.Band}.
+ *
+ * @author Konstantin Balykov
+ */
+
 @Controller
 @RequestMapping("/bands")
 @RequiredArgsConstructor
 public class BandController {
-    private final BandService service;
+  private final BandService service;
 
-    @GetMapping
-    public String getAll(Model model) {
-        model.addAttribute("bands", service.findAll());
-        return "bands";
-    }
+  @GetMapping
+  public String getAll(Model model) {
+    model.addAttribute("bands", service.findAll());
+    return "bands";
+  }
 
-    @PostMapping
-    public String create(BandWriteDto band) {
-        service.save(band);
-        return "redirect:/bands";
-    }
+  @PostMapping
+  public String create(BandWriteDto band) {
+    service.save(band);
+    return "redirect:/bands";
+  }
 
-    @PostMapping("/delete/{id}")
-    public String delete(@PathVariable("id") int id) {
-        service.delete(id);
-        return "redirect:/bands";
-    }
+  @PostMapping("/delete/{id}")
+  public String delete(@PathVariable("id") int id) {
+    service.delete(id);
+    return "redirect:/bands";
+  }
 }
