@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version "${springBootPlugin}"
     id 'io.spring.dependency-management' version "${springDependencyManagmentPlugin}"
     id 'io.freefair.lombok' version "${lombokPlugin}"
+    id 'jacoco'
 }
 
 group = 'com.github.balcon'
@@ -42,6 +43,27 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = false
+    }
+    // Exclude packages for test coverage
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "com/github/balcon/venue/entity/*",
+                    "com/github/balcon/venue/dto/*"
+            ])
+        }))
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.11"
 }
 
 compileJava {
