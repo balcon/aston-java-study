@@ -2,6 +2,7 @@ package com.github.balcon.venue.unit;
 
 import com.github.balcon.venue.dto.mapper.MusicianMapper;
 import com.github.balcon.venue.exception.ResourceNotFoundException;
+import com.github.balcon.venue.repository.BandRepository;
 import com.github.balcon.venue.repository.MusicianRepository;
 import com.github.balcon.venue.service.impl.MusicianServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,9 @@ import static org.mockito.Mockito.when;
 
 class MusicianServiceTest extends BaseUnitTest {
     @Mock
-    private MusicianRepository repository;
+    private MusicianRepository musicianRepository;
+    @Mock
+    private BandRepository bandRepository;
     @Spy
     private MusicianMapper mapper = Mappers.getMapper(MusicianMapper.class);
     @InjectMocks
@@ -30,42 +33,59 @@ class MusicianServiceTest extends BaseUnitTest {
 
     @Test
     void findById_invokeRepositoryFindById() {
-        when(repository.findById(anyInt())).thenReturn(Optional.of(MUSICIAN_DUMMY));
+        when(musicianRepository.findById(anyInt())).thenReturn(Optional.of(MUSICIAN_DUMMY));
 
         service.findById(DUMMY_ID);
 
-        verify(repository).findById(anyInt());
+        verify(musicianRepository).findById(anyInt());
     }
 
     @Test
     void findByName_invokeRepositoryFindByName() {
-        when(repository.findByNameContainsIgnoreCase(anyString()))
+        when(musicianRepository.findByNameContainsIgnoreCase(anyString()))
                 .thenReturn(Collections.emptyList());
 
         service.findByName("");
 
-        verify(repository).findByNameContainsIgnoreCase(anyString());
+        verify(musicianRepository).findByNameContainsIgnoreCase(anyString());
     }
 
     @Test
     void findById_notExists_throwException() {
-        when(repository.findById(anyInt())).thenReturn(Optional.empty());
+        when(musicianRepository.findById(anyInt())).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> service.findById(DUMMY_ID))
                 .isInstanceOf(ResourceNotFoundException.class);
     }
 
     @Test
+    void save_bandNotExists_throwException() {
+        when(bandRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> service.save(MUSICIAN_WRITE_DTO))
+                .isInstanceOf(ResourceNotFoundException.class);
+    }
+
+    @Test
     void update_notExists_throwException() {
-        when(repository.findById(anyInt())).thenReturn(Optional.empty());
+        when(musicianRepository.findById(anyInt())).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> service.update(DUMMY_ID, MUSICIAN_WRITE_DTO_DUMMY))
                 .isInstanceOf(ResourceNotFoundException.class);
     }
 
     @Test
+    void update_bandNotExists_throwException() {
+        when(musicianRepository.findById(anyInt())).thenReturn(Optional.of(MUSICIAN_DUMMY));
+        when(bandRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> service.update(DUMMY_ID, MUSICIAN_WRITE_DTO))
+                .isInstanceOf(ResourceNotFoundException.class);
+    }
+
+    @Test
     void delete_notExists_throwException() {
-        when(repository.findById(anyInt())).thenReturn(Optional.empty());
+        when(musicianRepository.findById(anyInt())).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> service.delete(DUMMY_ID))
                 .isInstanceOf(ResourceNotFoundException.class);

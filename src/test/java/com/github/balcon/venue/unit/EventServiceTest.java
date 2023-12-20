@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Optional;
 
 import static com.github.balcon.venue.TestData.*;
@@ -37,6 +39,15 @@ class EventServiceTest extends BaseUnitTest {
         service.findById(DUMMY_ID);
 
         verify(eventRepository).findById(anyInt());
+    }
+
+    @Test
+    void findByDate_invokeRepositoryFindByDate() {
+        when(eventRepository.findByDate(any())).thenReturn(Collections.emptyList());
+
+        service.findByDate(LocalDate.now());
+
+        verify(eventRepository).findByDate(any(LocalDate.class));
     }
 
     @Test
@@ -76,6 +87,23 @@ class EventServiceTest extends BaseUnitTest {
     }
 
     @Test
+    void addBand_eventNotExists_throwException() {
+        when(eventRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> service.addBand(DUMMY_ID, DUMMY_ID))
+                .isInstanceOf(ResourceNotFoundException.class);
+    }
+
+    @Test
+    void addBand_bandNotExists_throwException() {
+        when(eventRepository.findById(anyInt())).thenReturn(Optional.of(EVENT_DUMMY));
+        when(bandRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> service.addBand(DUMMY_ID, DUMMY_ID))
+                .isInstanceOf(ResourceNotFoundException.class);
+    }
+
+    @Test
     void removeBand_invokeRepositoriesFindById() {
         when(eventRepository.findById(anyInt())).thenReturn(Optional.of(EVENT_DUMMY));
         when(bandRepository.findById(anyInt())).thenReturn(Optional.of(BAND_DUMMY));
@@ -85,5 +113,22 @@ class EventServiceTest extends BaseUnitTest {
         verify(eventRepository).findById(anyInt());
         verify(eventRepository).save(any());
         verify(bandRepository).findById(anyInt());
+    }
+
+    @Test
+    void removeBand_eventNotExists_throwException() {
+        when(eventRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> service.removeBand(DUMMY_ID, DUMMY_ID))
+                .isInstanceOf(ResourceNotFoundException.class);
+    }
+
+    @Test
+    void removeBand_bandNotExists_throwException() {
+        when(eventRepository.findById(anyInt())).thenReturn(Optional.of(EVENT_DUMMY));
+        when(bandRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> service.removeBand(DUMMY_ID, DUMMY_ID))
+                .isInstanceOf(ResourceNotFoundException.class);
     }
 }
